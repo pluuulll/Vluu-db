@@ -15,33 +15,46 @@ export class SupabaseService {
     );
   }
 
-  // Método para obtener la contraseña de un usuario
-  async get(usuario: string) {
+  // Obtener la contraseña de un usuario por su nombre de usuario
+  async get(usuario: string): Promise<string | null> {
     const { data, error } = await this.supabase
       .from('usuarios')
       .select('contrasena')
-      .eq('usuario', usuario);
-    
+      .eq('usuario', usuario)
+      .single();
+
     if (error) {
-      throw error;
+      console.error('Error al obtener la contraseña:', error);
+      return null;
     }
 
-    return data![0].contrasena;
+    return data?.contrasena || null;
   }
 
-  // Método para registrar un nuevo usuario
-  async registerUser(usuario: string, contrasena: string) {
-    // Insertar el nuevo usuario en la tabla "usuarios"
+  // Verificar si un usuario ya existe
+  async doesUserExist(usuario: string): Promise<boolean> {
     const { data, error } = await this.supabase
       .from('usuarios')
-      .insert([
-        { usuario, contrasena }
-      ]);
+      .select('usuario')
+      .eq('usuario', usuario);
 
     if (error) {
-      throw error; // Lanza el error si ocurre uno durante la inserción
+      console.error('Error al verificar el usuario:', error);
+      return false;
     }
 
-    return data; // Retorna los datos insertados
+    return data.length > 0;
+  }
+
+  // Registrar un nuevo usuario
+  async registerUser(usuario: string, contrasena: string) {
+    const { error } = await this.supabase
+      .from('usuarios')
+      .insert([{ usuario, contrasena }]);
+
+    if (error) {
+      console.error('Error al registrar el usuario:', error);
+      throw error;
+    }
   }
 }

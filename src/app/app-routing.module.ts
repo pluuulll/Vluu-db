@@ -19,6 +19,10 @@ const routes: Routes = [
     redirectTo: 'login',
     pathMatch: 'full'
   },
+  {
+    path: 'recuperar',
+    loadChildren: () => import('./pages/recuperar/recuperar.module').then( m => m.RecuperarPageModule)
+  },
 ];
 
 @NgModule({

@@ -1,69 +1,57 @@
-// login.page.ts
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { SupabaseService } from '../../supabase.service';
 import { Router } from '@angular/router';
-import { AnimationController, Animation, AlertController } from '@ionic/angular';
-import { SupabaseService } from 'src/app/supabase.service';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
-export class LoginPage implements OnInit {
-
-  loginUsuario: string = "";
-  loginContrasena: string = "";
-  animation!: Animation;
+export class LoginPage {
+  loginUsuario = '';
+  loginContrasena = '';
 
   constructor(
-    private animationController: AnimationController,
+    private supabaseService: SupabaseService,
     private router: Router,
-    private alertController: AlertController,
-    private supabaseService: SupabaseService
-  ) { }
-
-  ngOnInit() {
-    this.animacionTexto();
-  }
+    private toastController: ToastController
+  ) {}
 
   async validarCredenciales() {
+    if (!this.loginUsuario || !this.loginContrasena) {
+      await this.mostrarToast('Por favor, completa ambos campos.', 'warning');
+      return;
+    }
+
     try {
-      // Usamos el servicio 'get' para obtener la contraseña del usuario desde la base de datos
-      const contrasena = await this.supabaseService.get(this.loginUsuario);
-      
-      // Comparamos la contraseña ingresada por el usuario con la obtenida de la base de datos
-      if (contrasena === this.loginContrasena) {
-        this.router.navigate(['/inicio']);
+      // Consultar la base de datos para obtener la contraseña del usuario
+      const contrasenaAlmacenada = await this.supabaseService.get(this.loginUsuario);
+
+      if (!contrasenaAlmacenada) {
+        await this.mostrarToast('Usuario no encontrado. Regístrate.', 'danger');
+        return;
+      }
+
+      if (this.loginContrasena === contrasenaAlmacenada) {
+        await this.mostrarToast('Inicio de sesión exitoso.', 'success');
+        this.router.navigate(['/inicio']); // Navega a la página principal
       } else {
-        await this.mostrarAlerta('Error en inicio de sesión', 'Usuario o contraseña incorrectos');
+        await this.mostrarToast('Contraseña incorrecta. Intenta nuevamente.', 'danger');
       }
     } catch (error) {
-      console.error('Error al iniciar sesión:', error);
-      await this.mostrarAlerta('Error', 'Ocurrió un error al iniciar sesión');
+      console.error('Error durante el login:', error);
+      await this.mostrarToast('Ocurrió un error al intentar iniciar sesión.', 'danger');
     }
   }
 
-  animacionTexto() {
-    const texto = document.getElementById('tPrincipal');
-
-    if (texto) {
-      this.animation = this.animationController.create()
-        .addElement(texto)
-        .duration(5000)
-        .iterations(Infinity)
-        .fromTo('transform', 'translateX(0px)', 'translateX(200px)');
-
-      this.animation.play();
-    }
-  }
-
-  async mostrarAlerta(header: string, message: string) {
-    const alert = await this.alertController.create({
-      header,
-      message,
-      buttons: ['Volver']
+  // Método para mostrar mensajes
+  private async mostrarToast(mensaje: string, color: string) {
+    const toast = await this.toastController.create({
+      message: mensaje,
+      duration: 2000,
+      color: color,
     });
-
-    await alert.present();
+    await toast.present();
   }
 }
