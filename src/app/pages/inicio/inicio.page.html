@@ -12,40 +12,35 @@
 
 <ion-content class="ion-padding">
   <ion-text>
-      <h2 class="ion-text-center">Bienvenido {{ inicioUsuario }}</h2>
+      <h2 class="ion-text-center">Bienvenido </h2>
       <p>Registro de Canción:</p>
   </ion-text>
 
   <!-- Formulario de Registro -->
-  <ion-item>
-      <ion-input label="Nombre:" maxlength="6" [(ngModel)]="inicioPatente"></ion-input>
-  </ion-item>
+  <form (ngSubmit)="addSong()" #songForm="ngForm">
+    <ion-item>
+        <ion-label position="floating">Nombre de la Canción</ion-label>
+        <ion-input type="text" [(ngModel)]="song.nombre" name="nombre" required></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label position="floating">Artista</ion-label>
+        <ion-input type="text" [(ngModel)]="song.artista" name="artista" required></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label position="floating">Duración (hh:mm:ss)</ion-label>
+        <ion-input type="text" [(ngModel)]="song.duracion" name="duracion" placeholder="00:03:45"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label position="floating">Álbum</ion-label>
+        <ion-input type="text" [(ngModel)]="song.album" name="album"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label position="floating">Año de Salida</ion-label>
+        <ion-input type="number" [(ngModel)]="song.ano" name="ano" min="1900" max="2100"></ion-input>
+    </ion-item>
+    <ion-button expand="block" type="submit" [disabled]="songForm.invalid">Agregar Canción</ion-button>
+</form>
 
-  <ion-item>
-      <ion-input label="Artista:" [(ngModel)]="inicioMarca"></ion-input>
-  </ion-item>
-
-  <ion-item>
-      <ion-input label="Año" [(ngModel)]="inicioModelo"></ion-input>
-  </ion-item>
-
-  <ion-item>
-      <ion-select [(ngModel)]="inicioTipo">
-          <div slot="label">Género:</div>
-          <ion-select-option value="Rock">Rock</ion-select-option>
-          <ion-select-option value="Pop">Pop</ion-select-option>
-          <ion-select-option value="Hip-Hip">Hip-Hop</ion-select-option>
-          <ion-select-option value="Rap">Rap</ion-select-option>
-          <ion-select-option value="Reggaton">Reggaetón</ion-select-option>
-      </ion-select>
-  </ion-item>
-
-  <ion-button class="color-principal ion-margin-top" expand="full" (click)="almacenarVehiculo()">
-      Registrar
-  </ion-button>
-  <ion-button class="color-principal ion-margin-top" expand="full" (click)="limpiarDatos()">
-      Limpiar campos
-  </ion-button>
   <ion-button class="ion-margin-top color-principal" expand="full" [routerLink]="['/perfil']">
       Perfil
   </ion-button>
@@ -60,25 +55,5 @@
   <ion-button expand="full" routerLink="/chat/:id">Ir al Chat</ion-button>
   <ion-button expand="full" routerLink="/amigos">Ir a Amigos</ion-button>
 
-  <!-- Buscador de Música -->
-  <ion-text class="ion-margin-top">
-      <p>Buscador de Música:</p>
-  </ion-text>
-
-  <ion-item>
-      <ion-input placeholder="Buscar música..." [(ngModel)]="query" clearInput></ion-input>
-      <ion-button slot="end" (click)="searchMusic()">Buscar</ion-button>
-  </ion-item>
-
-  <ion-list>
-      <ion-item *ngFor="let track of results">
-          <ion-thumbnail slot="start">
-              <img [src]="track.artworkUrl100" />
-          </ion-thumbnail>
-          <ion-label>
-              <h2>{{ track.trackName }}</h2>
-              <p>{{ track.artistName }}</p>
-          </ion-label>
-      </ion-item>
-  </ion-list>
+  
 </ion-content>

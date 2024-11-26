@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { HttpClient } from '@angular/common/http'; // Importa HttpClient para manejar solicitudes HTTP
+import { SupabaseService } from '../../supabase.service';
 
 @Component({
   selector: 'app-inicio',
@@ -8,47 +7,69 @@ import { HttpClient } from '@angular/common/http'; // Importa HttpClient para ma
   styleUrls: ['./inicio.page.scss'],
 })
 export class InicioPage implements OnInit {
+  // Modelo para el formulario
+  song = {
+    nombre: '',
+    artista: '',
+    duracion: '', // hh:mm:ss
+    album: '',
+    ano: null as number | null, // Permitir null
+  };
 
-  // Variables existentes para el registro
-  inicioUsuario: string = "";
-  inicioContrasena: string = "";
-  inicioPatente: string = "";
-  inicioMarca: string = "";
-  inicioModelo: string = "";
-  inicioTipo: string = "";
+  // Lista de canciones
+  songs: Array<{
+    nombre: string;
+    artista: string;
+    duracion?: string;
+    album?: string;
+    ano?: number | null; // Permitir null
+    creado_en?: string;
+  }> = [];
 
-  // Variables para el buscador de música
-  query: string = ""; // Texto de búsqueda
-  results: any[] = []; // Resultados de la búsqueda
+  constructor(private supabaseService: SupabaseService) {}
 
-  constructor(
-    private activeRoute: ActivatedRoute,
-    private http: HttpClient // Inyectamos HttpClient para usar en la búsqueda
-  ) {}
-
-  ngOnInit() {}
-
-  // Método para almacenar datos de vehículo
-  almacenarVehiculo() {
-//    this.dbServices.almacenarVehiculo(this.inicioPatente, this.inicioMarca, this.inicioModelo, this.inicioTipo);
+  ngOnInit() {
+    // Cargar canciones al inicializar la página
+    this.loadSongs();
   }
 
-  // Método para limpiar campos del formulario
-  limpiarDatos() {
-    this.inicioPatente = "";
-    this.inicioMarca = "";
-    this.inicioModelo = "";
-    this.inicioTipo = "";
+  // Agregar una nueva canción
+  async addSong() {
+    try {
+      // Llama al servicio para agregar la canción
+      await this.supabaseService.addSong({
+        ...this.song,
+        ano: this.song.ano === null ? undefined : this.song.ano, // Convertir null a undefined antes de enviarlo
+      });
+
+      // Agregar la nueva canción a la lista local
+      this.songs.unshift({
+        ...this.song,
+        creado_en: new Date().toISOString(),
+      });
+
+      // Limpiar el formulario
+      this.song = {
+        nombre: '',
+        artista: '',
+        duracion: '',
+        album: '',
+        ano: null, // Cambiado de "año" a "ano"
+      };
+
+      console.log('Canción agregada correctamente');
+    } catch (error) {
+      console.error('Error al agregar la canción:', error);
+    }
   }
 
-  // Método para buscar música usando la API de iTunes
-  searchMusic() {
-    if (this.query.trim() === '') return; // Si no hay búsqueda, no hacer nada
-
-    const apiUrl = `https://itunes.apple.com/search?term=${encodeURIComponent(this.query)}&media=music&limit=10`;
-
-    this.http.get(apiUrl).subscribe((response: any) => {
-      this.results = response.results; // Almacena los resultados en el array
-    });
+  // Cargar las canciones existentes desde la base de datos
+  async loadSongs() {
+    try {
+      this.songs = await this.supabaseService.getSongs();
+      console.log('Canciones cargadas:', this.songs);
+    } catch (error) {
+      console.error('Error al cargar las canciones:', error);
+    }
   }
 }

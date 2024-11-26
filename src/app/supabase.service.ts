@@ -15,6 +15,8 @@ export class SupabaseService {
     );
   }
 
+  // *********************** USUARIOS ****************************
+
   // Obtener la contraseña de un usuario por su nombre de usuario
   async get(usuario: string): Promise<string | null> {
     const { data, error } = await this.supabase
@@ -63,7 +65,7 @@ export class SupabaseService {
     const { data, error } = await this.supabase
       .from('usuarios')
       .update({ contrasena: nuevaContrasena })
-      .eq('usuario', usuario); // Filtramos por el usuario
+      .eq('usuario', usuario);
 
     if (error) {
       console.error('Error al actualizar la contraseña:', error);
@@ -82,7 +84,49 @@ export class SupabaseService {
       return false;
     }
 
-    // Compara la contraseña ingresada con la almacenada (en texto plano)
     return contrasena === storedPassword;
+  }
+
+  // *********************** CANCIONES ****************************
+
+  // Agregar una canción a la base de datos
+  async addSong(song: {
+    nombre: string;
+    artista: string;
+    duracion?: string; // Formato hh:mm:ss
+    album?: string;
+    ano?: number;
+  }) {
+    const { data, error } = await this.supabase.from('canciones').insert([
+      {
+        nombre: song.nombre,
+        artista: song.artista,
+        duracion: song.duracion
+          ? `PT${song.duracion.replace(':', 'H').replace(':', 'M')}S`
+          : null, // ISO 8601
+        album: song.album,
+        ano: song.ano,
+      },
+    ]);
+
+    if (error) {
+      console.error('Error al agregar la canción:', error);
+      throw error;
+    }
+    return data;
+  }
+
+  // Obtener todas las canciones
+  async getSongs() {
+    const { data, error } = await this.supabase
+      .from('canciones')
+      .select('*')
+      .order('creado_en', { ascending: false });
+
+    if (error) {
+      console.error('Error al obtener las canciones:', error);
+      throw error;
+    }
+    return data;
   }
 }
