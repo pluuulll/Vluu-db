@@ -46,7 +46,7 @@ export class SupabaseService {
     return data.length > 0;
   }
 
-  // Registrar un nuevo usuario
+  // Registrar un nuevo usuario (sin cifrado de contraseña)
   async registerUser(usuario: string, contrasena: string) {
     const { error } = await this.supabase
       .from('usuarios')
@@ -56,5 +56,33 @@ export class SupabaseService {
       console.error('Error al registrar el usuario:', error);
       throw error;
     }
+  }
+
+  // Actualizar la contraseña de un usuario (sin cifrado)
+  async updatePassword(usuario: string, nuevaContrasena: string) {
+    const { data, error } = await this.supabase
+      .from('usuarios')
+      .update({ contrasena: nuevaContrasena })
+      .eq('usuario', usuario); // Filtramos por el usuario
+
+    if (error) {
+      console.error('Error al actualizar la contraseña:', error);
+      return { error };
+    }
+
+    return { data };
+  }
+
+  // Verificar la contraseña durante el inicio de sesión (sin cifrado)
+  async verifyPassword(usuario: string, contrasena: string): Promise<boolean> {
+    const storedPassword = await this.get(usuario);
+
+    if (!storedPassword) {
+      console.error('Usuario no encontrado o contraseña incorrecta');
+      return false;
+    }
+
+    // Compara la contraseña ingresada con la almacenada (en texto plano)
+    return contrasena === storedPassword;
   }
 }
