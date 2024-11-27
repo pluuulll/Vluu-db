@@ -1,220 +1,139 @@
 /* Estilo global para toda la app */
-ion-header {
-  background-color: #1db954;
-  /* Color verde Spotify */
-  color: white;
-}
-
-ion-toolbar {
-  --background: #1db954;
-  /* Verde Spotify */
-}
-
-ion-title {
-  font-family: 'CircularStd', sans-serif;
-  /* Tipografía similar a la de Spotify */
-  font-weight: 600;
-  font-size: 24px;
-}
-
 ion-content {
   --background: #121212;
-  /* Fondo oscuro similar a Spotify */
   color: #fff;
   font-family: 'CircularStd', sans-serif;
-  /* Tipografía Spotify */
+  padding: 20px;
 }
 
-ion-text {
-  color: #fff;
+/* Encabezado del formulario */
+form h1 {
+  color: #1db954;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+  font-family: 'CircularStd', sans-serif;
 }
 
-/* Estilos para los inputs y botones */
+/* Estilo del contenedor del formulario */
+form {
+  background-color: #181818;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+/* Campos del formulario */
 ion-item {
-  --background: #181818;
-  /* Fondo oscuro para los formularios */
+  --background: none;
+  border: 1px solid #333;
   border-radius: 8px;
-  margin-bottom: 10px;
-}
-
-ion-input,
-ion-select {
-  --background: #333;
-  --border-radius: 8px;
-  --color: white;
-}
-
-ion-input {
-  font-size: 16px;
-}
-
-ion-select {
-  font-size: 16px;
-}
-
-/* Estilos del botón */
-ion-button {
-  --background: #1db954;
-  /* Botón verde Spotify */
-  --color: white;
-  --border-radius: 50px;
-  font-weight: 500;
-  font-size: 16px;
-}
-
-ion-button:hover {
-  --background: #1aa34a;
-  /* Un verde más oscuro al pasar el mouse */
-}
-
-ion-button:active {
-  --background: #1a943a;
-  /* Otro tono de verde al hacer clic */
-}
-
-/* Estilo para los resultados de la música */
-ion-list {
-  margin-top: 20px;
-}
-
-ion-item {
-  --background: #181818;
-  /* Fondo oscuro */
-  --border-radius: 10px;
-  margin-bottom: 10px;
-}
-
-ion-thumbnail {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  margin-right: 10px;
+  margin-bottom: 11px;
+  padding: 10px;
 }
 
 ion-label {
-  font-size: 16px;
+  font-size: 14px;
+  color: #b3b3b3;
+  margin-bottom: 5px;
+}
+
+ion-input {
+  --background: #282828;
+  --color: white;
+  font-size: 14px;
+  padding: 10px;
+  border-radius: 5px;
   color: #fff;
 }
 
-ion-label h2 {
-  font-weight: 600;
-  font-size: 18px;
-}
-
-ion-label p {
-  font-size: 14px;
+ion-input::placeholder {
   color: #b3b3b3;
 }
 
-/* Buscador de música */
-ion-input {
-  --background: #333;
-  --color: white;
-  border-radius: 50px;
-  padding: 10px;
-}
-
-ion-button[slot='end'] {
-  --background: #1db954;
-  /* Verde para el botón de búsqueda */
-  --color: white;
-  border-radius: 50%;
-  padding: 10px;
-}
-
-/* Estilos para el margen superior */
-ion-margin-top {
-  margin-top: 20px;
-}
-
-/* Estilo para el perfil */
-ion-button[routerLink='/perfil'] {
-  --background: #333;
-  --color: white;
-  --border-radius: 50px;
-}
-
-ion-thumbnail img {
-  border-radius: 8px;
-  width: 60px;
-  height: 60px;
-}
-
-/* Estilos para la barra de navegación inferior */
-.turca-button {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  border-radius: 50%;
-  padding: 10px;
-  background-color: #180502;
-  /* Color turca */
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-}
-
-.turca-button ion-icon {
-  font-size: 24px;
-  color: white;
-}
-
-/* Estilos específicos para el formulario */
-form {
-  padding: 0 20px;
-  margin-top: 20px;
-}
-
-/* Estilo de los campos del formulario */
-ion-item {
-  --background: #181818;
-  /* Fondo oscuro para los formularios */
-  border-radius: 8px;
-  margin-bottom: 10px;
-  display: flex;
-  align-items: center;
-  padding: 10px;
-}
-
-ion-label {
-  color: white;
+/* Botón del formulario */
+ion-button[type='submit'] {
+  background-color: #121212;
+  color: #fff;
   font-weight: bold;
-  font-size: 16px;
-}
-
-ion-input {
-  background-color: rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-  color: white;
-  font-size: 16px;
-  width: 100%;
-  padding: 12px;
-}
-
-/* Estilo para los placeholders */
-ion-input::placeholder {
-  color: rgba(255, 255, 255, 0.7); /* Color más suave para el placeholder */
-}
-
-/* Iconos al lado de los campos */
-ion-icon {
-  color: #D4AF37; /* Color dorado */
-  font-size: 20px;
-  margin-right: 10px;
-}
-
-/* Estilo de los campos con iconos */
-ion-item ion-label,
-ion-item ion-input {
-  display: inline-block;
-  vertical-align: middle;
-}
-
-/* Estilo del botón de submit */
-ion-button[type="submit"] {
-  background-color: #1DB954;
-  color: white;
   border-radius: 25px;
-  padding: 12px 16px;
-  font-weight: bold;
-  margin-top: 20px; /* Espaciado superior para el botón */
+  padding: 10px 20px;
+  font-size: 16px;
+  text-transform: uppercase;
   width: 100%;
+  margin-top: 15px;
+  transition: background-color 0.3s ease;
+}
+
+ion-button[type='submit']:hover {
+  background-color: #121212;
+}
+
+ion-button[type='submit']:disabled {
+  background-color: #555;
+  cursor: not-allowed;
+}
+
+/* Botones adicionales */
+.custom-button {
+  background-color: #121212;
+  color: #fff;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 25px;
+  text-align: center;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  display: block;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease;
+}
+
+.custom-button:hover {
+  background-color: #121212;
+}
+
+.custom-button ion-icon {
+  margin-right: 8px;
+}
+
+/* Botones de acción */
+.action-buttons {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.action-buttons ion-button {
+  margin-bottom: 10px;
+}
+/* Estilo base para los botones */
+.custom-button {
+  background-color:  #121212; 
+  color: #fff;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 25px; /* Bordes redondeados */
+  text-align: center;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  display: flex; /* Alinear ícono y texto */
+  align-items: center; /* Centrar verticalmente */
+  justify-content: center; /* Centrar horizontalmente */
+  text-transform: uppercase;
+  transition: background-color 0.3s ease; /* Animación al pasar el mouse */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Sombra */
+}
+
+/* Cambiar color al pasar el mouse */
+.custom-button:hover {
+  background-color:  #121212;
+}
+
+/* Íconos dentro del botón */
+.custom-button ion-icon {
+  margin-right: 8px; /* Separación entre ícono y texto */
+  font-size: 18px; /* Tamaño del ícono */
 }
