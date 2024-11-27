@@ -20,21 +20,12 @@ ion-content {
     background-color: #121212; 
     color: white; /* Texto blanco */
     border: none;
-    border-radius: 50px; /* Bordes redondeados */
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Sombra más intensa */
     font-family: 'Circular Std', sans-serif;
     font-weight: 600;
     padding: 10px 20px;
     transition: background-color 0.3s, transform 0.3s;
     display: inline-block;
   }
-  
-  /* Efecto hover para el botón */
-  ion-button:hover {
-    background-color: #17a84e; /* Verde más oscuro */
-    transform: scale(1.05); /* Efecto de aumento */
-  }
-  
   /* Encabezado */
   ion-toolbar.color-principal {
     background-color: #1DB954; /* Color de fondo verde */
