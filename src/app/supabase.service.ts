@@ -87,9 +87,9 @@ export class SupabaseService {
     return contrasena === storedPassword;
   }
 
-  // *********************** CANCIONES ****************************
 
-  // Agregar una canción a la base de datos
+  // *********************** Canciones****************************
+  // Método para agregar una canción
   async addSong(song: {
     nombre: string;
     artista: string;
@@ -116,7 +116,7 @@ export class SupabaseService {
     return data;
   }
 
-  // Obtener todas las canciones
+  // Método para obtener canciones
   async getSongs() {
     const { data, error } = await this.supabase
       .from('canciones')
@@ -128,5 +128,45 @@ export class SupabaseService {
       throw error;
     }
     return data;
+  }
+
+
+  // *********************** PERFIL ****************************
+
+  // Obtener el perfil de un usuario
+  async getUserProfile(usuario: string) {
+    const { data, error } = await this.supabase
+      .from('perfiles')
+      .select('*')
+      .eq('usuario', usuario)
+      .single();
+
+    if (error) {
+      throw new Error(`Error al obtener el perfil: ${error.message}`);
+    }
+    return data;
+  }
+
+  // Actualizar el perfil de un usuario
+  async updateUserProfile(usuario: string, data: any) {
+    const { error } = await this.supabase
+      .from('perfiles')
+      .update(data)
+      .eq('usuario', usuario);
+
+    if (error) {
+      throw new Error(`Error al actualizar el perfil: ${error.message}`);
+    }
+  }
+
+  // Agregar un ítem al perfil de un usuario
+  async addUserItem(usuario: string, item: string) {
+    const { error } = await this.supabase
+      .from('items_perfil')
+      .insert([{ usuario, item }]);
+
+    if (error) {
+      throw new Error(`Error al agregar el ítem: ${error.message}`);
+    }
   }
 }

@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Chatbot de Música</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let message of messages">
+      <ion-label [class]="message.isUser ? 'user-message' : 'bot-message'">
+        {{ message.text }}
+      </ion-label>
+    </ion-item>
+  </ion-list>
+  
+  <ion-footer>
+    <ion-toolbar>
+      <ion-input
+        [(ngModel)]="userInput"
+        placeholder="Escribe tu mensaje..."
+        (keyup.enter)="sendMessage()"
+        clearInput
+      ></ion-input>
+      <ion-button (click)="sendMessage()">Enviar</ion-button>
+    </ion-toolbar>
+  </ion-footer>
+</ion-content>

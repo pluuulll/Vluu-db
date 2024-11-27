@@ -23,6 +23,14 @@ const routes: Routes = [
     path: 'recuperar',
     loadChildren: () => import('./pages/recuperar/recuperar.module').then( m => m.RecuperarPageModule)
   },
+  {
+    path: 'perfil',
+    loadChildren: () => import('./pages/perfil/perfil.module').then( m => m.PerfilPageModule)
+  },
+  {
+    path: 'chatbot',
+    loadChildren: () => import('./pages/chatbot/chatbot.module').then( m => m.ChatbotPageModule)
+  },
 ];
 
 @NgModule({

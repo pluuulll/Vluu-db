@@ -1,59 +1,66 @@
 <ion-header>
-  <ion-toolbar class="color-principal">
-      <ion-title class="ion-text-center">Vluu</ion-title>
-      <!-- Botón en la orilla superior -->
-      <ion-buttons slot="start">
-          <ion-button [routerLink]="['/configuracion']" color="primary" class="turca-button">
-              <ion-icon name="settings-outline"></ion-icon>
-          </ion-button>
-      </ion-buttons>
-  </ion-toolbar>
+    <ion-toolbar class="color-principal">
+        <ion-title class="ion-text-center">Vluu</ion-title>
+        <!-- Botón en la orilla superior -->
+        <ion-buttons slot="start">
+            <ion-button [routerLink]="['/configuracion']" color="primary" class="turca-button">
+                <ion-icon name="settings-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-  <ion-text>
-      <h2 class="ion-text-center">Bienvenido </h2>
-      <p>Registro de Canción:</p>
-  </ion-text>
+    <ion-text>
+        <h2 class="ion-text-center">Bienvenido </h2>
+        <p>Registro de Canción:</p>
+    </ion-text>
 
-  <!-- Formulario de Registro -->
-  <form (ngSubmit)="addSong()" #songForm="ngForm">
-    <ion-item>
-        <ion-label position="floating">Nombre de la Canción</ion-label>
-        <ion-input type="text" [(ngModel)]="song.nombre" name="nombre" required></ion-input>
-    </ion-item>
-    <ion-item>
-        <ion-label position="floating">Artista</ion-label>
-        <ion-input type="text" [(ngModel)]="song.artista" name="artista" required></ion-input>
-    </ion-item>
-    <ion-item>
-        <ion-label position="floating">Duración (hh:mm:ss)</ion-label>
-        <ion-input type="text" [(ngModel)]="song.duracion" name="duracion" placeholder="00:03:45"></ion-input>
-    </ion-item>
-    <ion-item>
-        <ion-label position="floating">Álbum</ion-label>
-        <ion-input type="text" [(ngModel)]="song.album" name="album"></ion-input>
-    </ion-item>
-    <ion-item>
-        <ion-label position="floating">Año de Salida</ion-label>
-        <ion-input type="number" [(ngModel)]="song.ano" name="ano" min="1900" max="2100"></ion-input>
-    </ion-item>
-    <ion-button expand="block" type="submit" [disabled]="songForm.invalid">Agregar Canción</ion-button>
-</form>
+    <!-- Formulario de Registro -->
+    <form (ngSubmit)="addSong()" #songForm="ngForm">
+        <ion-item>
+            <ion-label position="floating">Nombre de la Canción</ion-label>
+            <ion-input type="text" [(ngModel)]="song.nombre" name="nombre" required></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label position="floating">Artista</ion-label>
+            <ion-input type="text" [(ngModel)]="song.artista" name="artista" required></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label position="floating">Duración (hh:mm:ss)</ion-label>
+            <ion-input type="text" [(ngModel)]="song.duracion" name="duracion" placeholder="00:03:45"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label position="floating">Álbum</ion-label>
+            <ion-input type="text" [(ngModel)]="song.album" name="album"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label position="floating">Año de Salida</ion-label>
+            <ion-input type="number" [(ngModel)]="song.ano" name="ano" min="1900" max="2100"></ion-input>
+        </ion-item>
+        <ion-button expand="block" type="submit" [disabled]="songForm.invalid">Agregar Canción</ion-button>
+    </form>
 
-  <ion-button class="ion-margin-top color-principal" expand="full" [routerLink]="['/perfil']">
-      Perfil
-  </ion-button>
+    <ion-button class="ion-margin-top color-principal" expand="full" [routerLink]="'/perfil'">
+        <ion-icon name="person" slot="start"></ion-icon>
+        Ver Perfil
+    </ion-button>
+    
+    <!-- Nuevo Botón de Recomendaciones -->
+    <ion-button class="ion-margin-top color-principal" expand="full" [routerLink]="['/recommendations']">
+        <ion-icon name="musical-notes" slot="start"></ion-icon>
+        Ver Recomendaciones
+    </ion-button>
 
-  <!-- Nuevo Botón de Recomendaciones -->
-  <ion-button class="ion-margin-top color-principal" expand="full" [routerLink]="['/recommendations']">
-      <ion-icon name="musical-notes" slot="start"></ion-icon>
-      Ver Recomendaciones
-  </ion-button>
+    <ion-button class="ion-margin-top color-principal" expand="full" [routerLink]="['/chatbot']">
+        <ion-icon name="chatbubbles" slot="start"></ion-icon>
+        Ir al ChatBot
+      </ion-button>
+      
 
-  <!-- Botones de Navegación -->
-  <ion-button expand="full" routerLink="/chat/:id">Ir al Chat</ion-button>
-  <ion-button expand="full" routerLink="/amigos">Ir a Amigos</ion-button>
+    <!-- Botones de Navegación -->
+    <ion-button expand="full" routerLink="/chat/:id">Ir al Chat</ion-button>
+    <ion-button expand="full" routerLink="/amigos">Ir a Amigos</ion-button>
 
-  
+
 </ion-content>
