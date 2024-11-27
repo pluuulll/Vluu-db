@@ -1,124 +1,19 @@
-/* Estilo global para toda la app */
-ion-header {
-    background-color: #1db954; /* Color verde Spotify */
-    color: white;
-  }
-  
-  ion-toolbar {
-    --background: #1db954; /* Verde Spotify */
-  }
-  
-  ion-title {
-    font-family: 'CircularStd', sans-serif; /* Tipografía similar a la de Spotify */
-    font-weight: 600;
-    font-size: 24px;
-  }
-  
-  ion-content {
-    --background: #121212; /* Fondo oscuro similar a Spotify */
-    color: #fff;
-    font-family: 'CircularStd', sans-serif; /* Tipografía Spotify */
-  }
-  
-  ion-text {
-    color: #fff;
-  }
-  
-  /* Estilos para los inputs y botones */
-  ion-item {
-    --background: #181818; /* Fondo oscuro para los formularios */
-    border-radius: 8px;
-    margin-bottom: 10px;
-  }
-  
-  ion-input, ion-select {
-    --background: #333;
-    --border-radius: 8px;
-    --color: white;
-  }
-  
-  ion-input {
-    font-size: 16px;
-  }
-  
-  ion-select {
-    font-size: 16px;
-  }
-  
-  /* Estilos del botón */
-  ion-button {
-    --background: #1db954; /* Botón verde Spotify */
-    --color: white;
-    --border-radius: 50px;
-    font-weight: 500;
-    font-size: 16px;
-  }
-  
-  ion-button:hover {
-    --background: #1aa34a; /* Un verde más oscuro al pasar el mouse */
-  }
-  
-  ion-button:active {
-    --background: #1a943a; /* Otro tono de verde al hacer clic */
-  }
-  
-  /* Estilo para los resultados de la música */
-  ion-list {
-    margin-top: 20px;
-  }
-  
-  ion-item {
-    --background: #181818; /* Fondo oscuro */
-    --border-radius: 10px;
-    margin-bottom: 10px;
-  }
-  
-  ion-thumbnail {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin-right: 10px;
-  }
-  
-  ion-label {
-    font-size: 16px;
-    color: #fff;
-  }
-  
-  ion-label h2 {
-    font-weight: 600;
-    font-size: 18px;
-  }
-  
-  ion-label p {
-    font-size: 14px;
-    color: #b3b3b3;
-  }
-  
-  /* Buscador de música */
-  ion-input {
-    --background: #333;
-    --color: white;
-    border-radius: 50px;
-    padding: 10px;
-  }
-  
-  ion-button[slot='end'] {
-    --background: #1db954; /* Verde para el botón de búsqueda */
-    --color: white;
-    border-radius: 50%;
-    padding: 10px;
-  }
-  
-  /* Estilos para el margen superior */
-  ion-margin-top {
-    margin-top: 20px;
-  }
-  
-  /* Estilo para el perfil */
-  ion-button[routerLink='/perfil'] {
-    --background: #333;
-    --color: white;
-    --border-radius: 50px;
-  }
-  
+.boton-estilo {
+  background-color: #4A90E2; /* Color azul similar al de los botones */
+  color: white;
+  font-weight: bold;
+  border-radius: 10px; /* Bordes redondeados */
+  text-transform: uppercase;
+  --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Efecto de sombra */
+}
+
+.enlace-estilo {
+  color: #4A90E2; /* Mismo color que los botones */
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.color-principal {
+  background-color: #333; /* Fondo oscuro similar al estilo mostrado */
+  color: white;
+}
