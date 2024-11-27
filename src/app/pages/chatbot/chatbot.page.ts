@@ -8,6 +8,7 @@ import { Component } from '@angular/core';
 export class ChatbotPage {
   userInput: string = '';
   messages: { text: string, isUser: boolean }[] = [];
+  showErrorMessage: boolean = false;  // Control para mostrar el mensaje de error
 
   // Respuestas predefinidas del bot
   responses: { [key: string]: string } = {
@@ -18,11 +19,21 @@ export class ChatbotPage {
   };
 
   sendMessage() {
-    if (this.userInput.trim()) {
-      this.messages.push({ text: this.userInput, isUser: true });
-      this.generateResponse(this.userInput);
-      this.userInput = '';
+    // Validar si el campo de entrada está vacío
+    if (this.userInput.trim() === '') {
+      this.showErrorMessage = true;  // Mostrar mensaje de error
+      return;
     }
+
+    // Agregar mensaje del usuario
+    this.messages.push({ text: this.userInput, isUser: true });
+
+    // Generar respuesta del bot
+    this.generateResponse(this.userInput);
+
+    // Limpiar el campo de entrada y ocultar mensaje de error
+    this.userInput = '';
+    this.showErrorMessage = false;
   }
 
   generateResponse(userMessage: string) {

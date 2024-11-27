@@ -1,6 +1,9 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>Chatbot de Música</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/inicio"></ion-back-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -12,7 +15,12 @@
       </ion-label>
     </ion-item>
   </ion-list>
-  
+
+  <!-- Mensaje de error si el campo de entrada está vacío -->
+  <ion-text color="danger" *ngIf="showErrorMessage" class="ion-margin-top error-message">
+    <p class="ion-text-center">Por favor, escribe un mensaje antes de enviar.</p>
+  </ion-text>
+
   <ion-footer>
     <ion-toolbar>
       <ion-input

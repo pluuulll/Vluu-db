@@ -1,50 +1,91 @@
-.spotify-header {
-    --background: #121212;
-    --color: #fff;
-    --ion-toolbar-background: #1db954; /* Verde Spotify */
-    --ion-toolbar-color: #fff;
-  }
-  
-  .spotify-content {
-    --background: #121212;
-    color: #fff;
-  }
-  
-  .spotify-item {
-    --background: #1e1e1e;
-    margin-bottom: 10px;
-    border-radius: 8px;
-    overflow: hidden;
-  }
-  
-  .spotify-thumbnail img {
-    border-radius: 8px;
-  }
-  
-  .track-title {
-    font-weight: bold;
-    color: #fff;
-  }
-  
-  .track-artists {
-    font-size: 0.9em;
-    color: #b3b3b3;
-  }
-  
-  .spotify-play-button {
-    --color: #1db954;
-    font-weight: bold;
-  }
-  
-  .spotify-fav-button {
-    --background: #1db954;
-    color: #fff;
-  }
-  
-  .no-recommendations {
-    text-align: center;
-    font-size: 1.2em;
-    color: #b3b3b3;
-    padding: 20px;
-  }
-  
+/* Estilo para la cabecera de Recomendaciones */
+.recomendaciones-header {
+  background-color: #1db954;  /* Color verde de Recomendaciones */
+  color: white;
+}
+
+/* Estilo para el contenido de Recomendaciones */
+.recomendaciones-content {
+  background-color: #121212;  /* Fondo oscuro para el contenido */
+  color: white;
+  padding: 10px;
+}
+
+/* Estilo para la lista de recomendaciones */
+.recomendaciones-item {
+  background-color: #1c1c1c;  /* Fondo oscuro de item */
+  border-radius: 10px;
+  margin-bottom: 10px;
+  padding: 10px;
+}
+
+/* Estilo para la miniatura de la imagen del álbum */
+.recomendaciones-thumbnail {
+  width: 50px;
+  height: 50px;
+  border-radius: 5px;
+}
+
+/* Estilo para el título de la canción */
+.track-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #1db954;  /* Color verde de Recomendaciones */
+  margin-bottom: 5px;
+}
+
+/* Estilo para los artistas */
+.track-artists {
+  font-size: 14px;
+  color: #b3b3b3;  /* Gris claro para los artistas */
+}
+
+/* Estilo para el botón de reproducir */
+.recomendaciones-play-button {
+  background-color: #1db954;  /* Color verde de Recomendaciones */
+  color: white;
+  border-radius: 20px;
+  font-size: 14px;
+  padding: 5px 10px;
+  margin-top: 5px;
+}
+
+/* Estilo para el botón de favoritos */
+.recomendaciones-fav-button {
+  background-color: #121212;  /* Fondo oscuro para el botón de favorito */
+  color: #b3b3b3;
+  font-size: 14px;
+  border-radius: 50px;
+  padding: 5px;
+}
+
+/* Estilo para el mensaje de "no hay recomendaciones" */
+.no-recommendations {
+  text-align: center;
+  font-size: 16px;
+  color: #b3b3b3;  /* Gris claro */
+  margin-top: 20px;
+}
+
+/* Estilo para la modal de vista previa */
+ion-modal {
+  background-color: #121212;  /* Fondo oscuro para la modal */
+}
+
+ion-modal ion-toolbar {
+  background-color: #1db954;  /* Verde de Recomendaciones para la barra */
+}
+
+/* Estilo para el botón cerrar dentro de la modal */
+ion-modal ion-button {
+  background-color: #1db954;
+  color: white;
+}
+
+/* Estilo para los controles de audio */
+audio {
+  width: 100%;
+  margin-top: 20px;
+  border-radius: 10px;
+  background-color: #1c1c1c; /* Fondo oscuro para el reproductor */
+}
