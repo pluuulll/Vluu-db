@@ -7,27 +7,22 @@ import { SupabaseService } from '../../supabase.service';
   styleUrls: ['./perfil.page.scss'],
 })
 export class PerfilPage implements OnInit {
-  userProfile: any = {}; // Información del perfil del usuario
-  private usuario: string = 'usuarioEjemplo'; // Reemplaza con la lógica adecuada para obtener el usuario actual
+  usuario: string = 'mi-usuario'; // Este valor debe ser dinámico según el usuario autenticado
+  perfil: any = null;
+  error: string | null = null;
 
   constructor(private supabaseService: SupabaseService) {}
 
   async ngOnInit() {
-    await this.loadUserProfile();
+    await this.cargarPerfil();
   }
 
-  async loadUserProfile() {
+  async cargarPerfil() {
     try {
-      // Llamada al método de SupabaseService para obtener la información del usuario
-      const usuario = await this.supabaseService.get(this.usuario);
-      if (usuario) {
-        this.userProfile = usuario;
-        console.log('Perfil cargado con éxito:', this.userProfile);
-      } else {
-        console.warn('No se encontró el perfil del usuario');
-      }
-    } catch (error) {
-      console.error('Error al cargar el perfil del usuario:', error);
+      this.perfil = await this.supabaseService.getUserProfile(this.usuario);
+    } catch (err) {
+      console.error('Error al cargar el perfil:', err);
+      this.error = 'No se pudo cargar el perfil.';
     }
   }
 }

@@ -1,20 +1,23 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Perfil de Usuario</ion-title>
+  <ion-toolbar class="color-principal">
+    <ion-title class="ion-text-center">Perfil</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <!-- Mostrar el nombre de usuario -->
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Información de Usuario</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-item *ngIf="userProfile">
-        <ion-label>Usuario</ion-label>
-        <ion-input [value]="userProfile.usuario" readonly></ion-input>
-      </ion-item>
-    </ion-card-content>
-  </ion-card>
+<ion-content class="ion-padding">
+  <div *ngIf="perfil; else noPerfil">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>{{ perfil.nombre || 'Nombre no disponible' }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p><strong>Usuario:</strong> {{ perfil.usuario }}</p>
+        <p><strong>Email:</strong> {{ perfil.email || 'No proporcionado' }}</p>
+        <p><strong>Bio:</strong> {{ perfil.bio || 'Sin descripción' }}</p>
+      </ion-card-content>
+    </ion-card>
+  </div>
+  <ng-template #noPerfil>
+    <p>{{ error || 'Cargando...' }}</p>
+  </ng-template>
 </ion-content>

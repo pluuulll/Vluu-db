@@ -1,0 +1,50 @@
+.spotify-header {
+    --background: #121212;
+    --color: #fff;
+    --ion-toolbar-background: #1db954; /* Verde Spotify */
+    --ion-toolbar-color: #fff;
+  }
+  
+  .spotify-content {
+    --background: #121212;
+    color: #fff;
+  }
+  
+  .spotify-item {
+    --background: #1e1e1e;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .spotify-thumbnail img {
+    border-radius: 8px;
+  }
+  
+  .track-title {
+    font-weight: bold;
+    color: #fff;
+  }
+  
+  .track-artists {
+    font-size: 0.9em;
+    color: #b3b3b3;
+  }
+  
+  .spotify-play-button {
+    --color: #1db954;
+    font-weight: bold;
+  }
+  
+  .spotify-fav-button {
+    --background: #1db954;
+    color: #fff;
+  }
+  
+  .no-recommendations {
+    text-align: center;
+    font-size: 1.2em;
+    color: #b3b3b3;
+    padding: 20px;
+  }
+  

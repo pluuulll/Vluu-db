@@ -2,39 +2,50 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  {
-    path: 'inicio',
-    loadChildren: () => import('./pages/inicio/inicio.module').then(m => m.InicioPageModule)
+  // Rutas principales
+  { 
+    path: '', 
+    redirectTo: 'login', // Redirección predeterminada
+    pathMatch: 'full' 
+  },
+  { 
+    path: 'inicio', 
+    loadChildren: () => import('./pages/inicio/inicio.module').then(m => m.InicioPageModule) 
+  },
+  { 
+    path: 'login', 
+    loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule) 
+  },
+  { 
+    path: 'registro', 
+    loadChildren: () => import('./pages/registro/registro.module').then(m => m.RegistroPageModule) 
+  },
+  { 
+    path: 'recuperar', 
+    loadChildren: () => import('./pages/recuperar/recuperar.module').then(m => m.RecuperarPageModule) 
+  },
+
+  // Rutas de navegación
+  { 
+    path: 'perfil', 
+    loadChildren: () => import('./pages/perfil/perfil.module').then(m => m.PerfilPageModule) 
+  },
+  { 
+    path: 'chatbot', 
+    loadChildren: () => import('./pages/chatbot/chatbot.module').then(m => m.ChatbotPageModule) 
+  },
+  { 
+    path: 'escanear', 
+    loadChildren: () => import('./pages/escanear/escanear.module').then(m => m.EscanearPageModule) 
+  },
+  { 
+    path: 'recomendaciones', 
+    loadChildren: () => import('./pages/recomendaciones/recomendaciones.module').then(m => m.RecomendacionesPageModule) 
   },
   {
-    path: 'login',
-    loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule)
-  },
-  {
-    path: 'registro', // Ruta para la página de registro
-    loadChildren: () => import('./pages/registro/registro.module').then(m => m.RegistroPageModule)
-  },
-  {
-    path: '',
-    redirectTo: 'login',
-    pathMatch: 'full'
-  },
-  {
-    path: 'recuperar',
-    loadChildren: () => import('./pages/recuperar/recuperar.module').then( m => m.RecuperarPageModule)
-  },
-  {
-    path: 'perfil',
-    loadChildren: () => import('./pages/perfil/perfil.module').then( m => m.PerfilPageModule)
-  },
-  {
-    path: 'chatbot',
-    loadChildren: () => import('./pages/chatbot/chatbot.module').then( m => m.ChatbotPageModule)
-  },
-  {
-    path: 'escanear',
-    loadChildren: () => import('./pages/escanear/escanear.module').then( m => m.EscanearPageModule)
-  },
+    path: 'mostrardatos',
+    loadChildren: () => import('./pages/mostrardatos/mostrardatos.module').then( m => m.MostrardatosPageModule)
+  }
 ];
 
 @NgModule({
@@ -43,4 +54,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

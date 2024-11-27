@@ -1,28 +1,32 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { RouteReuseStrategy } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms'; // Para formularios reactivos o de plantilla
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { RouteReuseStrategy } from '@angular/router';
+
+// Componentes principales
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { FormsModule } from '@angular/forms';
 
-// Importa QRScanner solo para usarlo en el componente donde lo necesites
+// Servicios y plugins de terceros
 import { QRScanner } from '@ionic-native/qr-scanner/ngx';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent, // Componente raíz de la aplicación
+  ],
   imports: [
-    BrowserModule,
-    IonicModule.forRoot(),
-    AppRoutingModule,
-    HttpClientModule,
-    FormsModule
+    BrowserModule, // Módulo principal del navegador
+    IonicModule.forRoot(), // Inicialización de Ionic
+    AppRoutingModule, // Módulo de enrutamiento
+    HttpClientModule, // Para realizar solicitudes HTTP
+    FormsModule, // Para manejar formularios
   ],
   providers: [
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    QRScanner // Añade QRScanner como provider aquí
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, // Estrategia de reutilización de rutas de Ionic
+    QRScanner, // Plugin de QR Scanner
   ],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent], // Componente raíz que se inicia al cargar la app
 })
 export class AppModule {}

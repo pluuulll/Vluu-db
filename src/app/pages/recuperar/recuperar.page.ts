@@ -14,16 +14,19 @@ export class RecuperarPage {
   constructor(private navCtrl: NavController, private supabaseService: SupabaseService) {}
 
   async validarUsuario() {
-    // Verificar si el usuario existe
-    const existe = await this.supabaseService.doesUserExist(this.usuario);
+    try {
+      // Verificar si el usuario existe
+      const existe = await this.supabaseService.doesUserExist(this.usuario);
 
-    if (existe) {
-      // Si el usuario existe, permitir cambiar la contraseña
-      console.log('Usuario válido');
-      // Mostrar el campo para cambiar la contraseña
-    } else {
-      console.error('El usuario no existe');
-      // Mostrar un mensaje de error si el usuario no existe
+      if (existe) {
+        console.log('Usuario válido');
+        // Mostrar el campo para cambiar la contraseña si es necesario
+      } else {
+        console.error('El usuario no existe');
+        // Mostrar un mensaje de error si el usuario no existe
+      }
+    } catch (error) {
+      console.error('Error al verificar el usuario:', error);
     }
   }
 
@@ -33,15 +36,14 @@ export class RecuperarPage {
       return;
     }
 
-    // Actualizar la contraseña en la base de datos
-    const { error } = await this.supabaseService.updatePassword(this.usuario, this.nuevaContrasena);
-
-    if (error) {
-      console.error('Error al cambiar la contraseña:', error);
-    } else {
+    try {
+      // Actualizar la contraseña en la base de datos
+      await this.supabaseService.updatePassword(this.usuario, this.nuevaContrasena);
       console.log('Contraseña cambiada correctamente');
       // Redirigir al login después de un cambio exitoso
       this.navCtrl.navigateBack('/login');
+    } catch (error) {
+      console.error('Error al cambiar la contraseña:', error);
     }
   }
 }

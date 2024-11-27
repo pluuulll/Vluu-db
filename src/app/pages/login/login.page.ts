@@ -26,7 +26,7 @@ export class LoginPage {
 
     try {
       // Consultar la base de datos para obtener la contraseña del usuario
-      const contrasenaAlmacenada = await this.supabaseService.get(this.loginUsuario);
+      const contrasenaAlmacenada = await this.supabaseService.getPassword(this.loginUsuario);
 
       if (!contrasenaAlmacenada) {
         await this.mostrarToast('Usuario no encontrado. Regístrate.', 'danger');
