@@ -31,6 +31,10 @@ const routes: Routes = [
     path: 'chatbot',
     loadChildren: () => import('./pages/chatbot/chatbot.module').then( m => m.ChatbotPageModule)
   },
+  {
+    path: 'escanear',
+    loadChildren: () => import('./pages/escanear/escanear.module').then( m => m.EscanearPageModule)
+  },
 ];
 
 @NgModule({
