@@ -16,15 +16,19 @@ const routes: Routes = [
   { path: 'recomendaciones', loadChildren: () => import('./pages/recomendaciones/recomendaciones.module').then(m => m.RecomendacionesPageModule) },
   { path: 'mostrardatos', loadChildren: () => import('./pages/mostrardatos/mostrardatos.module').then(m => m.MostrardatosPageModule) },
 
-  // Páginas de error
+  // Rutas de error
   { path: 'e404', loadChildren: () => import('./pages/e404/e404.module').then(m => m.E404PageModule) },
 
-  // Ruta comodín para páginas no encontradas (SIEMPRE AL FINAL)
-  { path: '**', redirectTo: 'e404', pathMatch: 'full' }
+  // Ruta comodín para páginas no encontradas
+  { path: '**', redirectTo: 'e404', pathMatch: 'full' },
+
+  // Otras páginas adicionales
+  { path: 'chat', loadChildren: () => import('./pages/chat/chat.module').then(m => m.ChatPageModule) },
+  { path: 'buscador', loadChildren: () => import('./pages/buscador/buscador.module').then(m => m.BuscadorPageModule) },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}

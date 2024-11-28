@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms'; // Para formularios reactivos o de plantilla
+import { FormsModule } from '@angular/forms';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -9,7 +9,7 @@ import { RouteReuseStrategy } from '@angular/router';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
-// Servicios y plugins de terceros
+// Servicios de terceros
 import { QRScanner } from '@ionic-native/qr-scanner/ngx';
 
 @NgModule({
@@ -21,7 +21,7 @@ import { QRScanner } from '@ionic-native/qr-scanner/ngx';
     IonicModule.forRoot(), // Inicialización de Ionic
     AppRoutingModule, // Módulo de enrutamiento
     HttpClientModule, // Para realizar solicitudes HTTP
-    FormsModule, // Para manejar formularios
+    FormsModule, // Para formularios
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, // Estrategia de reutilización de rutas de Ionic

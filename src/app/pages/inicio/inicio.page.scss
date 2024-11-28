@@ -56,7 +56,6 @@ ion-input::placeholder {
 
 /* Botón del formulario */
 ion-button[type='submit'] {
-  background-color: #121212;
   color: #fff;
   font-weight: bold;
   border-radius: 25px;
@@ -68,10 +67,6 @@ ion-button[type='submit'] {
   transition: background-color 0.3s ease;
 }
 
-ion-button[type='submit']:hover {
-  background-color: #121212;
-}
-
 ion-button[type='submit']:disabled {
   background-color: #555;
   cursor: not-allowed;
@@ -80,38 +75,6 @@ ion-button[type='submit']:disabled {
 /* Botones adicionales */
 .custom-button {
   background-color: #121212;
-  color: #fff;
-  font-size: 14px;
-  font-weight: bold;
-  border-radius: 25px;
-  text-align: center;
-  padding: 10px 15px;
-  margin-bottom: 10px;
-  display: block;
-  text-transform: uppercase;
-  transition: background-color 0.3s ease;
-}
-
-.custom-button:hover {
-  background-color: #121212;
-}
-
-.custom-button ion-icon {
-  margin-right: 8px;
-}
-
-/* Botones de acción */
-.action-buttons {
-  margin-top: 20px;
-  text-align: center;
-}
-
-.action-buttons ion-button {
-  margin-bottom: 10px;
-}
-/* Estilo base para los botones */
-.custom-button {
-  background-color:  #121212; 
   color: #fff;
   font-size: 14px;
   font-weight: bold;
@@ -129,11 +92,30 @@ ion-button[type='submit']:disabled {
 
 /* Cambiar color al pasar el mouse */
 .custom-button:hover {
-  background-color:  #121212;
+  background-color: #121212;
 }
 
 /* Íconos dentro del botón */
 .custom-button ion-icon {
   margin-right: 8px; /* Separación entre ícono y texto */
   font-size: 18px; /* Tamaño del ícono */
+}
+
+/* Botón para la barra de herramientas */
+.turca-button {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 20px;
+  padding: 0;
+}
+
+/* Estilo de los botones de acción */
+.action-buttons {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.action-buttons ion-button {
+  margin-bottom: 10px;
 }

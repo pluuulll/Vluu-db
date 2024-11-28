@@ -7,12 +7,17 @@
                 <ion-icon name="settings-outline"></ion-icon>
             </ion-button>
         </ion-buttons>
+        <ion-buttons slot="end">
+            <ion-button [routerLink]="['/perfil']" color="primary" class="turca-button">
+                <ion-icon name="person-circle-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
     </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
     <ion-text>
-        <h2 class="ion-text-center">Bienvenido </h2>
+        <h2 class="ion-text-center">Bienvenido</h2>
         <p>Registro de Canción:</p>
     </ion-text>
 
@@ -22,8 +27,7 @@
 
         <ion-item>
             <ion-label position="floating">Nombre de la Canción</ion-label>
-            <ion-input type="text" [(ngModel)]="song.nombre" name="nombre" placeholder="Nombre de la canción"
-                required></ion-input>
+            <ion-input type="text" [(ngModel)]="song.nombre" name="nombre" placeholder="Nombre de la canción" required></ion-input>
         </ion-item>
 
         <ion-item>
@@ -43,13 +47,13 @@
 
         <ion-item>
             <ion-label position="floating">Año de Salida</ion-label>
-            <ion-input type="number" [(ngModel)]="song.ano" name="ano" min="1900" max="2100"
-                placeholder="Año"></ion-input>
+            <ion-input type="number" [(ngModel)]="song.ano" name="ano" min="1900" max="2100" placeholder="Año"></ion-input>
         </ion-item>
 
         <ion-button expand="block" type="submit" [disabled]="songForm.invalid">Agregar Canción</ion-button>
     </form>
 
+    <!-- Botones de navegación -->
     <div class="action-buttons">
         <ion-button class="custom-button" expand="block" routerLink="/perfil">
             <ion-icon name="person-circle-outline"></ion-icon> Ver Perfil
@@ -57,25 +61,21 @@
         <ion-button class="custom-button" expand="block" routerLink="/recomendaciones">
             <ion-icon name="musical-notes-outline"></ion-icon> Ver Recomendaciones
         </ion-button>
-        <ion-button class="custom-button" expand="block" routerLink="/canciones">
+        <ion-button class="custom-button" routerLink="/mostrardatos" expand="block">
             <ion-icon name="albums-outline"></ion-icon> Ver Canciones
         </ion-button>
     </div>
 
-    <ion-button class="custom-button" routerLink="/chatbot">
-        <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
-        Ir al Chatbot
+    <!-- Otros botones -->
+    <ion-button class="custom-button" routerLink="/chatbot" expand="block">
+        <ion-icon name="chatbubble-ellipses-outline"></ion-icon> Ir al Chatbot
     </ion-button>
 
-    <ion-button class="custom-button" routerLink="/escanear-qr">
-        <ion-icon name="qr-code-outline"></ion-icon>
-        Escanear QR
+    <ion-button class="custom-button" routerLink="/escanear-qr" expand="block">
+        <ion-icon name="qr-code-outline"></ion-icon> Escanear QR
     </ion-button>
 
-    <ion-button class="custom-button" routerLink="/chat">
-        Ir al Chat
+    <ion-button class="custom-button" routerLink="/chat" expand="block">
+        <ion-icon name="chatbubble-outline"></ion-icon> Ir al Chat
     </ion-button>
-
-    <ion-button class="custom-button" routerLink="/amigos">
-        Ir a Amigos
-    </ion-button>
+</ion-content>

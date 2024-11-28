@@ -13,6 +13,7 @@ export class RegistroPage {
     contrasena: ''
   };
   showErrorMessage: boolean = false; // Controla la visibilidad del mensaje de error
+  errorMessage: string = ''; // Mensaje de error específico
 
   constructor(private supabaseService: SupabaseService, private router: Router) {}
 
@@ -20,18 +21,23 @@ export class RegistroPage {
     // Verificar si los campos están vacíos
     if (this.user.usuario.trim() === '' || this.user.contrasena.trim() === '') {
       this.showErrorMessage = true; // Mostrar el mensaje de error si algún campo está vacío
+      this.errorMessage = 'Todos los campos deben ser completados.';
       return;
     }
 
     try {
       // Intentar registrar al usuario en la base de datos
-      await this.supabaseService.registerUser(this.user.usuario, this.user.contrasena);
+      await this.supabaseService.registerUser({ 
+        usuario: this.user.usuario, 
+        contrasena: this.user.contrasena 
+      });
       console.log('Usuario registrado exitosamente');
       // Redirigir al login después de un registro exitoso
-      this.router.navigate(['/login']);
+      this.router.navigate(['/login']); // Ruta de redirección correcta
     } catch (error) {
       console.error('Error en el registro:', error);
-      // Manejar el error y mostrar un mensaje
+      this.showErrorMessage = true;
+      this.errorMessage = 'Hubo un problema al registrar el usuario. Inténtalo de nuevo.';
     }
   }
 }

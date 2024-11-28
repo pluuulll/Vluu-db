@@ -13,7 +13,7 @@ export class MostrardatosPage implements OnInit {
     artista: '',
     duracion: '',
     album: '',
-    ano: undefined, // Cambiado de null a undefined
+    ano: undefined, // Año puede ser un número entero o undefined
   };
 
   // Propiedad para almacenar los datos obtenidos de la base de datos
@@ -23,28 +23,67 @@ export class MostrardatosPage implements OnInit {
 
   // Método de inicialización para cargar los datos al inicio
   async ngOnInit() {
+    await this.loadUserItems();
+  }
+
+  /**
+   * Carga los datos del usuario desde la base de datos
+   */
+  private async loadUserItems(): Promise<void> {
     try {
-      // Cambia 'usuario_ejemplo' por el usuario actual o el que estés usando
-      const usuario = 'usuario_ejemplo'; 
+      const usuario = 'usuario_ejemplo'; // Cambiar a usuario dinámico si es necesario
       this.datos = await this.supabaseService.getUserItems(usuario);
     } catch (error) {
-      console.error('Error al cargar los datos:', error);
+      this.handleError('Error al cargar los datos del usuario', error);
     }
   }
 
-  async addSong() {
+  /**
+   * Verifica si los campos de la canción están completos
+   * @returns boolean
+   */
+  private isSongValid(): boolean {
+    const { nombre, artista, duracion, album, ano } = this.song;
+    return Boolean(nombre && artista && duracion && album && ano !== undefined);
+  }
+
+  /**
+   * Agrega una nueva canción a la base de datos
+   */
+  async addSong(): Promise<void> {
+    if (!this.isSongValid()) {
+      this.handleError('Todos los campos deben ser completados.');
+      return;
+    }
+
     try {
-      // Llamamos al método de SupabaseService para agregar la canción
       const response = await this.supabaseService.addSong(this.song);
       console.log('Canción agregada:', response);
 
-      // Opcional: Limpiar el formulario después de enviar
-      this.song = { nombre: '', artista: '', duracion: '', album: '', ano: undefined };
-      
+      // Limpiar el formulario después de enviar
+      this.resetSongForm();
+
       // Actualizar la lista de canciones después de agregar una nueva
-      this.datos = await this.supabaseService.getUserItems('usuario_ejemplo');
+      await this.loadUserItems();
     } catch (error) {
-      console.error('Error al agregar la canción:', error);
+      this.handleError('Error al agregar la canción', error);
     }
+  }
+
+  /**
+   * Maneja errores de manera centralizada
+   * @param message Mensaje de error a mostrar
+   * @param error Detalles del error (opcional)
+   */
+  private handleError(message: string, error?: any): void {
+    console.error(message, error);
+    alert(`${message}. Por favor, intente de nuevo más tarde.`);
+  }
+
+  /**
+   * Limpia el formulario de la canción
+   */
+  private resetSongForm(): void {
+    this.song = { nombre: '', artista: '', duracion: '', album: '', ano: undefined };
   }
 }
