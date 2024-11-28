@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SupabaseService } from '../../supabase.service';
+import { Router } from '@angular/router';
+import { Usuario, Cancion } from '../../supabase.service';
 
 @Component({
   selector: 'app-inicio',
@@ -7,69 +9,113 @@ import { SupabaseService } from '../../supabase.service';
   styleUrls: ['./inicio.page.scss'],
 })
 export class InicioPage implements OnInit {
-  // Modelo para el formulario
-  song = {
-    nombre: '',
-    artista: '',
-    duracion: '', // hh:mm:ss
-    album: '',
-    ano: null as number | null, // Permitir null
-  };
+  user: Usuario | null | undefined; // Usuario autenticado
+  song: Cancion = this.initializeSong(); // Canción temporal para agregar
+  songs: Cancion[] = []; // Lista de canciones cargadas
 
-  // Lista de canciones
-  songs: Array<{
-    nombre: string;
-    artista: string;
-    duracion?: string;
-    album?: string;
-    ano?: number | null; // Permitir null
-    creado_en?: string;
-  }> = [];
+  constructor(
+    private supabaseService: SupabaseService,
+    private router: Router
+  ) {}
 
-  constructor(private supabaseService: SupabaseService) {}
-
-  ngOnInit() {
-    // Cargar canciones al inicializar la página
-    this.loadSongs();
+  /**
+   * Inicializa la página cargando al usuario y las canciones.
+   */
+  async ngOnInit() {
+    await this.fetchUser();
+    await this.loadSongs();
   }
 
-  // Agregar una nueva canción
-  async addSong() {
+  /**
+   * Intenta obtener el usuario autenticado.
+   * Si no está autenticado, se puede redirigir a la página de inicio de sesión.
+   */
+  private async fetchUser() {
     try {
-      // Llama al servicio para agregar la canción
-      await this.supabaseService.addSong({
-        ...this.song,
-        ano: this.song.ano === null ? undefined : this.song.ano, // Convertir null a undefined antes de enviarlo
-      });
+      this.user = await this.supabaseService.getUser();
+      if (!this.user) {
+        console.warn('Usuario no autenticado');
+        // Redirigir a la página de inicio de sesión si es necesario
+        // this.router.navigate(['/login']);
+      }
+    } catch (error) {
+      console.error('Error al obtener el usuario:', error);
+      // Manejo adicional según la lógica del sistema
+    }
+  }
 
-      // Agregar la nueva canción a la lista local
-      this.songs.unshift({
+  /**
+   * Agrega una nueva canción si los datos son válidos.
+   */
+  async addSong() {
+    if (!this.isSongValid(this.song)) {
+      console.warn('Por favor, completa todos los campos obligatorios de la canción.');
+      return;
+    }
+
+    try {
+      const newSong: Cancion = {
         ...this.song,
+        ano: this.song.ano ?? 0, // Establecer año predeterminado si no está definido
+      };
+
+      // Guardar canción en el servicio
+      await this.supabaseService.addSong(newSong);
+
+      // Mostrarla inmediatamente en la lista
+      this.songs.unshift({
+        ...newSong,
         creado_en: new Date().toISOString(),
       });
 
-      // Limpiar el formulario
-      this.song = {
-        nombre: '',
-        artista: '',
-        duracion: '',
-        album: '',
-        ano: null, // Cambiado de "año" a "ano"
-      };
-
+      this.resetSongForm();
       console.log('Canción agregada correctamente');
     } catch (error) {
       console.error('Error al agregar la canción:', error);
     }
   }
 
-  // Cargar las canciones existentes desde la base de datos
+  /**
+   * Verifica que los campos obligatorios de la canción no estén vacíos.
+   */
+  private isSongValid(song: Cancion): boolean {
+    return song.nombre.trim() !== '' && song.artista.trim() !== '';
+  }
+
+  /**
+   * Reinicia el formulario de la canción.
+   */
+  private resetSongForm(): void {
+    this.song = this.initializeSong();
+  }
+
+  /**
+   * Carga las canciones desde el servicio.
+   */
   async loadSongs() {
     try {
-      this.songs = await this.supabaseService.getSongs();
-      console.log('Canciones cargadas:', this.songs);
+      const songs = await this.supabaseService.getSongs();
+      this.songs = songs || [];
+      if (this.songs.length === 0) {
+        console.log('No se encontraron canciones.');
+      } else {
+        console.log(`Canciones cargadas (${this.songs.length}):`, this.songs);
+      }
     } catch (error) {
       console.error('Error al cargar las canciones:', error);
     }
+  }
+
+  /**
+   * Inicializa un objeto canción con valores predeterminados.
+   */
+  private initializeSong(): Cancion {
+    return {
+      nombre: '',
+      artista: '',
+      duracion: '', // Formato esperado: "hh:mm:ss"
+      album: '',
+      ano: undefined, // Usar undefined en lugar de null
+    };
   }
 }

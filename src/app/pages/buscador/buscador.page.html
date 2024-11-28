@@ -1,8 +1,11 @@
 <ion-header>
+  <ion-buttons slot="start">
+    <ion-back-button defaultHref="/chat"></ion-back-button>
+  </ion-buttons>
   <ion-toolbar>
     <ion-title>Buscador de Usuarios</ion-title>
   </ion-toolbar>
-</ion-header>
+</ion-header>  
 
 <ion-content>
   <ion-searchbar [(ngModel)]="searchQuery" (ionInput)="searchUsers()"></ion-searchbar>

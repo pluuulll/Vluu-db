@@ -19,12 +19,20 @@ const routes: Routes = [
   // Rutas de error
   { path: 'e404', loadChildren: () => import('./pages/e404/e404.module').then(m => m.E404PageModule) },
 
-  // Ruta comodín para páginas no encontradas
-  { path: '**', redirectTo: 'e404', pathMatch: 'full' },
-
-  // Otras páginas adicionales
+  // Páginas adicionales
   { path: 'chat', loadChildren: () => import('./pages/chat/chat.module').then(m => m.ChatPageModule) },
   { path: 'buscador', loadChildren: () => import('./pages/buscador/buscador.module').then(m => m.BuscadorPageModule) },
+
+  // Redirección genérica para rutas no encontradas
+  { path: '**', redirectTo: 'e404', pathMatch: 'full' },
+  {
+    path: 'perfil',
+    loadChildren: () => import('./pages/perfil/perfil.module').then( m => m.PerfilPageModule)
+  },
+  {
+    path: 'mostrardatos',
+    loadChildren: () => import('./pages/mostrardatos/mostrardatos.module').then( m => m.MostrardatosPageModule)
+  },
 ];
 
 @NgModule({

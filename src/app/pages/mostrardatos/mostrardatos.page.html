@@ -1,52 +1,16 @@
-<ion-header>
+<ion-header [translucent]="true">
+  <ion-buttons slot="start">
+    <ion-back-button defaultHref="/inicio"></ion-back-button>
+  </ion-buttons>
   <ion-toolbar>
-    <ion-title>Lista de Canciones</ion-title>
+    <ion-title>mostrardatos</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <!-- Lista de canciones -->
-  <ion-list>
-    <ion-item *ngFor="let dato of datos">
-      <ion-label>
-        <h2>{{ dato.nombre }}</h2>
-        <p>Artista: {{ dato.artista }}</p>
-        <p>Duración: {{ dato.duracion }}</p>
-        <p>Álbum: {{ dato.album }}</p>
-        <p>Año: {{ dato.ano }}</p>
-      </ion-label>
-    </ion-item>
-  </ion-list>
-
-  <!-- Formulario para agregar canciones -->
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Agregar Nueva Canción</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-item>
-        <ion-label position="floating">Nombre</ion-label>
-        <ion-input [(ngModel)]="song.nombre"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Artista</ion-label>
-        <ion-input [(ngModel)]="song.artista"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Duración</ion-label>
-        <ion-input [(ngModel)]="song.duracion"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Álbum</ion-label>
-        <ion-input [(ngModel)]="song.album"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">Año</ion-label>
-        <ion-input type="number" [(ngModel)]="song.ano"></ion-input>
-      </ion-item>
-      <ion-button expand="block" color="primary" (click)="addSong()">
-        Agregar Canción
-      </ion-button>
-    </ion-card-content>
-  </ion-card>
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">mostrardatos</ion-title>
+    </ion-toolbar>
+  </ion-header>
 </ion-content>
