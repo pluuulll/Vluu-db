@@ -1,26 +1,49 @@
+/* Cambios para el ion-header */
 .spotify-header {
-    --background: #121212;
-    --ion-toolbar-background: #1db954; /* Verde Spotify */
-    --ion-toolbar-color: #fff;
-  }
-  
-  .spotify-content {
-    --background: #121212;
-    color: #fff;
-  }
-  
-  .spotify-qr-button {
-    --background: #1db954;
-    --color: #fff;
-    --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    font-weight: bold;
-    font-size: 1.1em;
-    border-radius: 8px;
-    text-transform: uppercase;
-  }
-  
-  .spotify-qr-button ion-icon {
-    font-size: 1.5em;
-    margin-right: 8px;
-  }
-  
+  --background: #1DB954; /* Color verde característico de Spotify */
+  --ion-text-color: white; /* Color del texto del título */
+}
+
+.spotify-header .ion-toolbar {
+  padding: 10px 15px; /* Ajuste de padding en el toolbar */
+  display: flex; /* Usamos flexbox para alinear elementos */
+  align-items: center; /* Centrar verticalmente */
+  justify-content: space-between; /* Distribuir el contenido con espacio entre ellos */
+}
+
+.spotify-header .spotify-header-title {
+  flex-grow: 1; /* Esto asegura que el título ocupe el espacio disponible */
+  display: flex;
+  justify-content: flex-start; /* Alinea el título a la izquierda */
+}
+
+.spotify-header .ion-title {
+  font-size: 20px; /* Tamaño del título */
+  font-weight: bold;
+  margin-left: 10px; /* Espacio entre el botón y el título */
+}
+
+/* Cambios para el ion-button */
+.spotify-qr-button {
+  background-color: #1DB954; /* Color verde de Spotify para el botón */
+  color: white; /* Color blanco para el texto del botón */
+  font-weight: bold; /* Texto en negrita */
+  border-radius: 10px; /* Bordes redondeados */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  transition: background-color 0.3s ease-in-out; /* Transición suave al pasar el ratón */
+}
+
+.spotify-qr-button:hover {
+  background-color: #1ed760; /* Color verde más claro al pasar el ratón */
+}
+
+/* Estilo para el contenido del ion-content */
+.spotify-content {
+  padding: 20px;
+  text-align: center; /* Centrar los elementos en el contenido */
+}
+
+/* Ajustar icono del botón */
+.spotify-qr-button ion-icon {
+  margin-right: 10px; /* Espacio entre el icono y el texto */
+}
