@@ -126,11 +126,32 @@ export class SupabaseService {
   async getSongs(): Promise<Cancion[]> {
     const { data, error } = await this.supabase
       .from('canciones')
-      .select('*')
-      .order('creado_en', { ascending: false });
+      .select('*') // Asegúrate de seleccionar todas las columnas
+      .order('creado_en', { ascending: false }); // Ordenar por fecha de creación, opcional
     this.handleError(error, 'obtener canciones');
     return data ?? [];
   }
+  
+
+  async updateSong(id: string, cambios: Partial<Cancion>): Promise<{ error: PostgrestError | null }> {
+    const { error } = await this.supabase
+      .from('canciones')
+      .update(cambios)
+      .eq('id', id);
+    this.handleError(error, 'actualizar canción');
+    return { error };
+  }
+
+
+  async deleteSong(id: string): Promise<{ error: PostgrestError | null }> {
+    const { error } = await this.supabase
+      .from('canciones')
+      .delete()
+      .eq('id', id);
+    this.handleError(error, 'eliminar canción');
+    return { error };
+  }
+
 
   // *********************** PERFIL ****************************
   async getProfile(): Promise<Usuario | null> {
