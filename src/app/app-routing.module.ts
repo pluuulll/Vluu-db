@@ -15,24 +15,17 @@ const routes: Routes = [
   { path: 'escanear', loadChildren: () => import('./pages/escanear/escanear.module').then(m => m.EscanearPageModule) },
   { path: 'recomendaciones', loadChildren: () => import('./pages/recomendaciones/recomendaciones.module').then(m => m.RecomendacionesPageModule) },
   { path: 'mostrardatos', loadChildren: () => import('./pages/mostrardatos/mostrardatos.module').then(m => m.MostrardatosPageModule) },
+  { path: 'chat', loadChildren: () => import('./pages/chat/chat.module').then(m => m.ChatPageModule) },
+  { path: 'buscador', loadChildren: () => import('./pages/buscador/buscador.module').then(m => m.BuscadorPageModule) },
+  
+  // Página para buscar canciones (nueva ruta)
+  { path: 'buscadorapi', loadChildren: () => import('./pages/buscadorapi/buscadorapi.module').then(m => m.BuscadorapiPageModule) },
 
   // Rutas de error
   { path: 'e404', loadChildren: () => import('./pages/e404/e404.module').then(m => m.E404PageModule) },
 
-  // Páginas adicionales
-  { path: 'chat', loadChildren: () => import('./pages/chat/chat.module').then(m => m.ChatPageModule) },
-  { path: 'buscador', loadChildren: () => import('./pages/buscador/buscador.module').then(m => m.BuscadorPageModule) },
-
   // Redirección genérica para rutas no encontradas
   { path: '**', redirectTo: 'e404', pathMatch: 'full' },
-  {
-    path: 'perfil',
-    loadChildren: () => import('./pages/perfil/perfil.module').then( m => m.PerfilPageModule)
-  },
-  {
-    path: 'mostrardatos',
-    loadChildren: () => import('./pages/mostrardatos/mostrardatos.module').then( m => m.MostrardatosPageModule)
-  },
 ];
 
 @NgModule({

@@ -1,53 +1,49 @@
+// buscadorapi.page.ts
 import { Component, OnInit } from '@angular/core';
+import { ItunesService } from '../../itunes.service';
 import { ToastController } from '@ionic/angular';
-import { ItunesService } from '../../itunes.service'; // Importa el servicio de iTunes
 
 @Component({
-  selector: 'app-recomendaciones',
-  templateUrl: './recomendaciones.page.html',
-  styleUrls: ['./recomendaciones.page.scss'],
+  selector: 'app-buscadorapi',
+  templateUrl: './buscadorapi.page.html',
+  styleUrls: ['./buscadorapi.page.scss'],
 })
-export class RecomendacionesPage implements OnInit {
-  recomendaciones: any[] = [];
+export class BuscadorapiPage implements OnInit {
+  canciones: any[] = [];
+  term: string = ''; // Término de búsqueda
   audioPlayer: HTMLAudioElement | null = null;
   currentTrack: any | null = null;
   favoritos: any[] = [];
-  cargando: boolean = false;
 
   constructor(
-    private toastController: ToastController,
-    private itunesService: ItunesService // Inyectamos el servicio
+    private itunesService: ItunesService,
+    private toastController: ToastController
   ) {}
 
-  ngOnInit() {
-    this.cargarRecomendaciones();
-  }
+  ngOnInit() {}
 
-  // Método para cargar recomendaciones desde la API de iTunes
-  cargarRecomendaciones() {
-    this.cargando = true;
-    this.itunesService.obtenerRecomendaciones('rock').subscribe(
-      (response) => {
-        this.recomendaciones = response.results;
-        this.cargando = false;
-      },
-      (error) => {
-        console.error('Error al obtener recomendaciones:', error);
-        this.cargando = false;
-        this.mostrarToast('Error al cargar recomendaciones');
-      }
-    );
+  // Método para buscar canciones
+  buscarCanciones() {
+    if (this.term.trim()) {
+      this.itunesService.buscarCanciones(this.term).subscribe(
+        (response) => {
+          this.canciones = response.results;
+        },
+        (error) => {
+          console.error('Error al buscar canciones:', error);
+          this.mostrarToast('Error al buscar canciones');
+        }
+      );
+    }
   }
 
   // Método para reproducir la vista previa de la canción
   playPreview(track: any) {
     if (this.audioPlayer) {
-      // Detener la canción actual si se está reproduciendo
       if (this.currentTrack !== track) {
         this.audioPlayer.pause();
         this.audioPlayer.currentTime = 0;
       } else {
-        // Si ya está sonando, hacer pausa
         if (!this.audioPlayer.paused) {
           this.audioPlayer.pause();
           return;
@@ -55,7 +51,6 @@ export class RecomendacionesPage implements OnInit {
       }
     }
 
-    // Crear nuevo reproductor de audio
     this.audioPlayer = new Audio(track.previewUrl);
 
     this.audioPlayer.onerror = () => {
@@ -72,15 +67,6 @@ export class RecomendacionesPage implements OnInit {
         this.mostrarToast('No se puede reproducir la vista previa');
         this.currentTrack = null;
       });
-  }
-
-  // Método para cerrar la vista previa de la canción
-  closePreview() {
-    if (this.audioPlayer) {
-      this.audioPlayer.pause();
-      this.audioPlayer = null;
-    }
-    this.currentTrack = null;
   }
 
   // Método para agregar una canción a favoritos

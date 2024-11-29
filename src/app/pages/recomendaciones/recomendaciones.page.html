@@ -1,71 +1,48 @@
-<ion-header [translucent]="true" class="spotify-header">
+<ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/inicio"></ion-back-button>
     </ion-buttons>
     <ion-title>Recomendaciones</ion-title>
+    <ion-buttons slot="end">
+      <ion-button [routerLink]="['/buscadorapi']" color="primary" class="turca-button">
+        <ion-icon name="search-outline"></ion-icon> <!-- Icono de búsqueda -->
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="spotify-content">
-  <ion-refresher slot="fixed" (ionRefresh)="recargarRecomendaciones($event)">
-    <ion-refresher-content></ion-refresher-content>
-  </ion-refresher>
+<ion-list *ngIf="recomendaciones?.length; else noRecomendaciones">
+  <ion-item-sliding *ngFor="let track of recomendaciones" class="itunes-item">
+    <ion-item>
+      <ion-thumbnail slot="start" class="itunes-thumbnail">
+        <ion-img [src]="track.artworkUrl100 || 'assets/default-album.jpg'"
+          alt="Portada del álbum {{ track.collectionName }}"></ion-img>
+      </ion-thumbnail>
+      <ion-label>
+        <h2 class="track-title">{{ track.trackName }}</h2>
+        <p class="track-artists">{{ track.artistName }}</p>
+        <p class="track-album">{{ track.collectionName }}</p>
+      </ion-label>
 
-  <ion-list *ngIf="recomendaciones?.length; else noRecomendaciones">
-    <ion-item-sliding *ngFor="let track of recomendaciones" class="spotify-item">
-      <ion-item>
-        <ion-thumbnail slot="start" class="spotify-thumbnail">
-          <ion-img [src]="track.album?.images[0]?.url || 'assets/default-album.jpg'"></ion-img>
-        </ion-thumbnail>
-        <ion-label>
-          <h2 class="track-title">{{ track.name }}</h2>
-          <p class="track-artists">{{ track.artists | artistList }}</p>
-        </ion-label>
-        <ion-button 
-          (click)="playPreview(track.preview_url)" 
-          fill="clear" 
-          class="spotify-play-button" 
-          [disabled]="!track.preview_url"
-        >
-          <ion-icon name="play-circle" slot="start"></ion-icon>
-          Reproducir
-        </ion-button>
-      </ion-item>
-      
-      <ion-item-options side="end">
-        <ion-item-option class="spotify-fav-button" (click)="agregarAFavoritos(track)">
-          <ion-icon name="heart" slot="start"></ion-icon>
-          Favorito
-        </ion-item-option>
-      </ion-item-options>
-    </ion-item-sliding>
-  </ion-list>
+      <!-- Botón para reproducir vista previa -->
+      <ion-button (click)="playPreview(track)" fill="clear" class="itunes-play-button" [disabled]="!track.previewUrl">
+        <ion-icon name="play-circle" slot="start"></ion-icon>
+        {{ track.previewUrl ? 'Reproducir' : 'No disponible' }}
+      </ion-button>
+    </ion-item>
 
-  <ng-template #noRecomendaciones>
-    <ion-text color="medium">
-      <p class="no-recommendations">No hay recomendaciones disponibles</p>
-    </ion-text>
-  </ng-template>
+    <!-- Opciones de la canción (Añadir a favoritos) -->
+    <ion-item-option class="itunes-fav-button" (click)="agregarAFavoritos(track)">
+      <ion-icon name="heart" slot="start"></ion-icon>
+      Favorito
+    </ion-item-option>
+  </ion-item-sliding>
+</ion-list>
 
-  <ion-modal [isOpen]="!!previewUrl" (didDismiss)="closePreview()">
-    <ng-template>
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>Vista previa</ion-title>
-          <ion-buttons slot="end">
-            <ion-button (click)="closePreview()">Cerrar</ion-button>
-          </ion-buttons>
-        </ion-toolbar>
-      </ion-header>
-      <ion-content>
-        <audio 
-          #audioPlayer 
-          [src]="previewUrl" 
-          controls 
-          autoplay
-        ></audio>
-      </ion-content>
-    </ng-template>
-  </ion-modal>
-</ion-content>
+<!-- Mensaje si no hay recomendaciones -->
+<ng-template #noRecomendaciones>
+  <ion-item>
+    <ion-label>No se encontraron recomendaciones.</ion-label>
+  </ion-item>
+</ng-template>
