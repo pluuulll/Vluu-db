@@ -1,7 +1,0 @@
-{
-  "name": "Vluu",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "angular"
-}
