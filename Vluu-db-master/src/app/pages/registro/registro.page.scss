@@ -1,0 +1,19 @@
+.boton-estilo {
+  background-color: #4A90E2; /* Color azul */
+  color: white;
+  font-weight: bold;
+  border-radius: 10px; /* Bordes redondeados */
+  text-transform: uppercase;
+  --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Efecto de sombra */
+}
+
+.enlace-estilo {
+  color: #4A90E2; /* Color azul */
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.color-principal {
+  background-color: #333; /* Fondo oscuro */
+  color: white;
+}

@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-buttons slot="start">
+    <ion-back-button defaultHref="/chat"></ion-back-button>
+  </ion-buttons>
+  <ion-toolbar>
+    <ion-title>Buscador de Usuarios</ion-title>
+  </ion-toolbar>
+</ion-header>  
+
+<ion-content>
+  <ion-searchbar [(ngModel)]="searchQuery" (ionInput)="searchUsers()"></ion-searchbar>
+
+  <ion-list>
+    <ion-item *ngFor="let user of searchResults">
+      <ion-label>{{ user.nombre }} ({{ user.usuario }})</ion-label>
+      <ion-button slot="end" (click)="addFriend(user.id)">Agregar</ion-button>
+    </ion-item>
+  </ion-list>
+</ion-content>

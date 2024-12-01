@@ -1,0 +1,65 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/inicio"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="profile-content">
+  <!-- Header condensable -->
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Perfil</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <!-- Contenedor del perfil -->
+  <div class="profile-container">
+    <!-- Foto de perfil con área de edición -->
+    <div class="profile-picture-container" (click)="changeProfilePicture()">
+      <img
+        [src]="user.photoURL || defaultPhoto"
+        alt="Foto de perfil"
+        class="profile-picture"
+      />
+      <div class="edit-overlay">
+        <ion-icon name="camera-outline" aria-label="Editar foto de perfil"></ion-icon>
+      </div>
+    </div>
+
+    <!-- Formulario de información básica -->
+    <ion-list class="profile-form">
+      <ion-item>
+        <ion-label position="stacked">Nombre</ion-label>
+        <ion-input
+          [(ngModel)]="user.nombre"
+          placeholder="Ingresa tu nombre"
+          clearInput
+          aria-label="Nombre de usuario"
+        ></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Descripción</ion-label>
+        <ion-textarea
+          [(ngModel)]="user.descripcion"
+          placeholder="Cuéntanos algo sobre ti"
+          auto-grow
+          aria-label="Descripción de usuario"
+        ></ion-textarea>
+      </ion-item>
+    </ion-list>
+
+    <!-- Botón para guardar los cambios -->
+    <ion-button
+      expand="block"
+      shape="round"
+      class="save-button"
+      (click)="saveChanges()"
+      aria-label="Guardar cambios"
+    >
+      Guardar cambios
+    </ion-button>
+  </div>
+</ion-content>

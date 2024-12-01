@@ -1,0 +1,17 @@
+<ion-header class="spotify-header">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/inicio"></ion-back-button>
+    </ion-buttons>
+    <div class="spotify-header-title">
+      <ion-title>Escanear QR</ion-title>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="spotify-content ion-padding">
+  <ion-button class="spotify-qr-button ion-margin-top" expand="full" (click)="startScanning()">
+    <ion-icon name="qr-code-outline" slot="start"></ion-icon>
+    Escanear QR
+  </ion-button>
+</ion-content>

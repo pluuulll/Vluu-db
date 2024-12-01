@@ -1,8 +1,69 @@
+/* Estilos para el encabezado */
+ion-header {
+  --background: #000000; /* Fondo negro */
+  --color: #ffffff; /* Texto blanco */
+}
+
+ion-toolbar {
+  --background: #000000; /* Fondo negro */
+  --color: #ffffff; /* Texto blanco */
+}
+
+ion-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  color: #ffffff; /* Blanco */
+}
+
+/* Botón de retroceso */
+ion-back-button {
+  --color: #ffffff; /* Blanco */
+}
+
+/* Contenido principal */
 ion-content {
-    padding: 10px;
-  }
-  
-  ion-searchbar {
-    margin-bottom: 20px;
-  }
-  
+  --background: #000000; /* Fondo negro */
+  --padding-start: 16px;
+  --padding-end: 16px;
+}
+
+/* Barra de búsqueda */
+ion-searchbar {
+  --background: #1a1a1a; /* Fondo gris oscuro */
+  --color: #ffffff; /* Texto blanco */
+  --placeholder-color: #888888; /* Texto de marcador en gris medio */
+  border: 1px solid #333333; /* Borde gris oscuro */
+  border-radius: 8px;
+  margin: 16px 0;
+}
+
+/* Lista de usuarios */
+ion-list {
+  --background: #000000; /* Fondo negro */
+}
+
+ion-item {
+  --background: #1a1a1a; /* Fondo gris oscuro */
+  color: #ffffff; /* Texto blanco */
+  margin-bottom: 10px;
+  border-radius: 10px;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+ion-item ion-label {
+  font-size: 1rem;
+  color: #ffffff; /* Blanco */
+}
+
+ion-item ion-button {
+  --background: #333333; /* Fondo gris oscuro */
+  --color: #ffffff; /* Texto blanco */
+  --border-radius: 8px;
+}
+
+/* Botón de "Agregar" */
+ion-button {
+  --background: #4caf50; /* Verde para destacar */
+  --color: #ffffff; /* Texto blanco */
+}
