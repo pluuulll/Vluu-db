@@ -10,9 +10,10 @@ import { Usuario } from '../../supabase.service'; // Asegúrate de importar la i
 })
 export class PerfilPage implements OnInit {
   user: Usuario = {
-    usuario: '',      // Asegúrate de que 'usuario' y 'contrasena' estén presentes
-    contrasena: '',   // Asegúrate de que 'usuario' y 'contrasena' estén presentes
+    usuario: '',
+    contrasena: '',
   };
+  favoritos: any[] = []; // Array para almacenar los favoritos del usuario
   readonly defaultPhoto: string = 'assets/default-profile.png'; // Ruta de la imagen por defecto
 
   constructor(
@@ -23,17 +24,16 @@ export class PerfilPage implements OnInit {
 
   async ngOnInit() {
     await this.loadUserProfile();
+    await this.loadFavoritos(); // Cargar los favoritos después de cargar el perfil
   }
 
   private async loadUserProfile() {
     const loading = await this.presentLoading('Cargando perfil...');
     try {
       const profile = await this.supabaseService.getProfile();
-      
-      // Asegúrate de que los campos 'usuario' y 'contrasena' estén presentes en el perfil
       this.user = profile ? {
-        usuario: profile.usuario || '',      // Asegura que el campo 'usuario' esté presente
-        contrasena: profile.contrasena || '', // Asegura que el campo 'contrasena' esté presente
+        usuario: profile.usuario || '',
+        contrasena: profile.contrasena || '',
       } : { ...this.user, photoURL: this.defaultPhoto };
 
       if (!profile) {
@@ -45,6 +45,36 @@ export class PerfilPage implements OnInit {
     } finally {
       await loading.dismiss();
     }
+  }
+
+  // Método para cargar los favoritos del usuario
+  private async loadFavoritos() {
+    const loading = await this.presentLoading('Cargando favoritos...');
+    try {
+      // Obtén el user ID de la autenticación de Supabase
+      const user = await this.supabaseService.getUser(); // Método para obtener el usuario autenticado
+      const userId = user?.id; // Asegúrate de obtener el ID del usuario autenticado
+
+      if (userId) {
+        // Si el ID del usuario está disponible, procede a obtener los favoritos
+        const favoritos = await this.supabaseService.getFavoritos(userId);
+        this.favoritos = favoritos || []; // Asignamos los favoritos a la variable
+      } else {
+        console.error('No se ha encontrado el ID del usuario.');
+        await this.presentAlert('Error', 'No se pudo obtener el ID del usuario.');
+      }
+    } catch (error) {
+      console.error('Error al cargar los favoritos:', error);
+      await this.presentAlert('Error', 'No se pudieron cargar los favoritos.');
+    } finally {
+      await loading.dismiss();
+    }
+  }
+
+  // Método para reproducir la vista previa de la canción
+  playPreview(previewUrl: string) {
+    const audio = new Audio(previewUrl);  // Crea un objeto Audio con la URL de la vista previa
+    audio.play();  // Reproduce la canción
   }
 
   async changeProfilePicture() {
@@ -59,7 +89,6 @@ export class PerfilPage implements OnInit {
         {
           text: 'Seleccionar',
           handler: () => {
-            // Aquí debes implementar la lógica para cambiar la foto de perfil
             console.log('Funcionalidad de selección de imagen no implementada.');
           },
         },
@@ -105,5 +134,4 @@ export class PerfilPage implements OnInit {
   private isUserProfileValid(user: Usuario): boolean {
     return user.usuario.trim() !== '' && user.contrasena.trim() !== '';
   }
-  
 }

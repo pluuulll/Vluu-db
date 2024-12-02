@@ -1,4 +1,3 @@
-<!-- buscadorapi.page.html -->
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
@@ -10,10 +9,16 @@
 
 <ion-content>
   <!-- Barra de búsqueda -->
-  <ion-searchbar [(ngModel)]="term" debounce="500" (ionInput)="buscarCanciones()"></ion-searchbar>
+  <ion-searchbar 
+    [(ngModel)]="term" 
+    debounce="500" 
+    (ionInput)="buscarCanciones()" 
+    placeholder="Buscar por nombre de canción o artista"
+    [showClearButton]="true">
+  </ion-searchbar>
 
   <!-- Lista de canciones -->
-  <ion-list *ngIf="canciones.length; else noResultados">
+  <ion-list *ngIf="canciones.length > 0; else noResultados">
     <ion-item-sliding *ngFor="let track of canciones" class="itunes-item">
       <ion-item>
         <ion-thumbnail slot="start" class="itunes-thumbnail">
@@ -22,20 +27,27 @@
         <ion-label>
           <h2 class="track-title">{{ track.trackName }}</h2>
           <p class="track-artists">{{ track.artistName }}</p>
-          <p class="track-album">{{ track.collectionName }}</p>
+          <p class="track-album">{{ track.collectionName || 'Álbum no disponible' }}</p>
         </ion-label>
 
         <!-- Botón para reproducir vista previa -->
-        <ion-button (click)="playPreview(track)" fill="clear" class="itunes-play-button" [disabled]="!track.previewUrl">
+        <ion-button 
+          (click)="playPreview(track)" 
+          fill="clear" 
+          class="itunes-play-button" 
+          [disabled]="!track.previewUrl">
           <ion-icon name="play-circle" slot="start"></ion-icon>
           {{ track.previewUrl ? 'Reproducir' : 'No disponible' }}
         </ion-button>
       </ion-item>
 
       <!-- Opciones de la canción (Añadir a favoritos) -->
-      <ion-item-option class="itunes-fav-button" (click)="agregarAFavoritos(track)">
+      <ion-item-option 
+        class="itunes-fav-button" 
+        (click)="agregarAFavoritos(track)" 
+        [disabled]="track.isFavorito">
         <ion-icon name="heart" slot="start"></ion-icon>
-        Favorito
+        <span>{{ track.isFavorito ? 'Ya en favoritos' : 'Agregar a favoritos' }}</span>
       </ion-item-option>
     </ion-item-sliding>
   </ion-list>
@@ -46,4 +58,5 @@
       <ion-label>No se encontraron canciones.</ion-label>
     </ion-item>
   </ng-template>
+
 </ion-content>

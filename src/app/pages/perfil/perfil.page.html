@@ -1,29 +1,17 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
+<ion-content [fullscreen]="true" class="profile-content">
+  <ion-header collapse="condense">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/inicio"></ion-back-button>
     </ion-buttons>
-    <ion-title>Perfil</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true" class="profile-content">
-  <!-- Header condensable -->
-  <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">Perfil</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <!-- Contenedor del perfil -->
   <div class="profile-container">
     <!-- Foto de perfil con área de edición -->
     <div class="profile-picture-container" (click)="changeProfilePicture()">
-      <img
-        [src]="user.photoURL || defaultPhoto"
-        alt="Foto de perfil"
-        class="profile-picture"
-      />
+      <img [src]="user.photoURL || defaultPhoto" alt="Foto de perfil" class="profile-picture" />
       <div class="edit-overlay">
         <ion-icon name="camera-outline" aria-label="Editar foto de perfil"></ion-icon>
       </div>
@@ -33,33 +21,42 @@
     <ion-list class="profile-form">
       <ion-item>
         <ion-label position="stacked">Nombre</ion-label>
-        <ion-input
-          [(ngModel)]="user.nombre"
-          placeholder="Ingresa tu nombre"
-          clearInput
-          aria-label="Nombre de usuario"
-        ></ion-input>
+        <ion-input [(ngModel)]="user.nombre" placeholder="Ingresa tu nombre" clearInput
+          aria-label="Nombre de usuario"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label position="stacked">Descripción</ion-label>
-        <ion-textarea
-          [(ngModel)]="user.descripcion"
-          placeholder="Cuéntanos algo sobre ti"
-          auto-grow
-          aria-label="Descripción de usuario"
-        ></ion-textarea>
+        <ion-textarea [(ngModel)]="user.descripcion" placeholder="Cuéntanos algo sobre ti" auto-grow
+          aria-label="Descripción de usuario"></ion-textarea>
       </ion-item>
     </ion-list>
 
     <!-- Botón para guardar los cambios -->
-    <ion-button
-      expand="block"
-      shape="round"
-      class="save-button"
-      (click)="saveChanges()"
-      aria-label="Guardar cambios"
-    >
+    <ion-button expand="block" shape="round" class="save-button" (click)="saveChanges()" aria-label="Guardar cambios">
       Guardar cambios
     </ion-button>
+  </div>
+
+  <div class="profile-container">
+    <!-- Mostrar favoritos -->
+    <ion-list *ngIf="favoritos.length > 0; else noFavorites">
+      <ion-item *ngFor="let favorito of favoritos">
+        <ion-thumbnail slot="start">
+          <img [src]="favorito.artwork_url || 'assets/default-cover.jpg'" alt="Portada" />
+        </ion-thumbnail>
+        <ion-label>
+          <h2>{{ favorito.track_name }}</h2>
+          <p>{{ favorito.artist_name }}</p>
+          <small>{{ favorito.collection_name }}</small>
+        </ion-label>
+        <ion-button slot="end" fill="outline" color="primary" (click)="playPreview(favorito.preview_url)">
+          Vista Previa
+        </ion-button>
+      </ion-item>
+    </ion-list>
+
+    <ng-template #noFavorites>
+      <p>No tienes favoritos aún.</p>
+    </ng-template>
   </div>
 </ion-content>

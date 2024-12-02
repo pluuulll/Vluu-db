@@ -4,18 +4,18 @@ import { environment } from '../environments/environment';
 
 // Interfaces para tipar las tablas
 export interface Cancion {
-  id?: string; // ID opcional, puede ser UUID o un string
+  id?: string;
   nombre: string;
   artista: string;
-  duracion?: string; // Formato "hh:mm:ss"
+  duracion?: string; 
   album?: string;
   ano?: number;
-  usuario_id?: string; // ID del usuario propietario de la canción
-  creado_en?: string; // Fecha de creación, puede ser string o Date
+  usuario_id?: string;
+  creado_en?: string;
 }
 
 export interface Usuario {
-  id?: string; // ID opcional, puede ser UUID o un string
+  id?: string;
   usuario: string;
   contrasena: string;
   nombre?: string;
@@ -24,11 +24,11 @@ export interface Usuario {
 }
 
 interface Mensaje {
-  id?: string; // ID opcional, puede ser UUID o un string
+  id?: string;
   emisor_id: string;
   receptor_id: string;
   mensaje: string;
-  timestamp?: string; // Fecha y hora del mensaje
+  timestamp?: string;
 }
 
 @Injectable({
@@ -49,7 +49,32 @@ export class SupabaseService {
     }
   }
 
+  private async handleSessionError(sessionError: any): Promise<void> {
+    if (sessionError) {
+      console.warn('No hay sesión activa. Redirigiendo al login...');
+      await this.supabase.auth.signOut();
+    }
+  }
+
   // *********************** USUARIOS ****************************
+  private async checkSession(): Promise<Usuario | null> {
+    const { data: sessionData, error: sessionError } = await this.supabase.auth.getSession();
+    await this.handleSessionError(sessionError);
+    if (!sessionData?.session) return null;
+
+    return this.getUser(); // Si hay sesión, devuelve el usuario actual
+  }
+
+  private async getUserDataById(userId: string): Promise<Usuario | null> {
+    const { data, error } = await this.supabase
+      .from('usuarios')
+      .select('*')
+      .eq('id', userId)
+      .single();
+    this.handleError(error, 'obtener usuario');
+    return data ?? null;
+  }
+
   async getPassword(usuario: string): Promise<string | null> {
     const { data, error } = await this.supabase
       .from('usuarios')
@@ -84,34 +109,8 @@ export class SupabaseService {
   }
 
   async verifyPassword(usuario: string, contrasena: string): Promise<boolean> {
-    try {
-      const storedPassword = await this.getPassword(usuario);
-      return storedPassword === contrasena;
-    } catch (error) {
-      console.error('Error al verificar la contraseña:', error);
-      return false;
-    }
-  }
-
-  async getUser(): Promise<Usuario | null> {
-    try {
-      const { data: { user }, error: authError } = await this.supabase.auth.getUser();
-      if (authError || !user) {
-        throw authError || new Error('Usuario no autenticado');
-      }
-
-      const { data, error } = await this.supabase
-        .from('usuarios')
-        .select('*')
-        .eq('id', user.id)
-        .single();
-
-      this.handleError(error, 'obtener usuario');
-      return data;
-    } catch (error) {
-      console.error('Error al obtener el usuario:', error);
-      return null;
-    }
+    const storedPassword = await this.getPassword(usuario);
+    return storedPassword === contrasena;
   }
 
   // *********************** CANCIONES ****************************
@@ -126,77 +125,44 @@ export class SupabaseService {
   async getSongs(): Promise<Cancion[]> {
     const { data, error } = await this.supabase
       .from('canciones')
-      .select('*') // Asegúrate de seleccionar todas las columnas
-      .order('creado_en', { ascending: false }); // Ordenar por fecha de creación, opcional
+      .select('*')
+      .order('creado_en', { ascending: false });
     this.handleError(error, 'obtener canciones');
     return data ?? [];
   }
-  
 
   async updateSong(id: string, cambios: Partial<Cancion>): Promise<{ error: PostgrestError | null }> {
     const { error } = await this.supabase
       .from('canciones')
       .update(cambios)
       .eq('id', id);
-    this.handleError(error, 'actualizar canción');
     return { error };
   }
-
 
   async deleteSong(id: string): Promise<{ error: PostgrestError | null }> {
     const { error } = await this.supabase
       .from('canciones')
       .delete()
       .eq('id', id);
-    this.handleError(error, 'eliminar canción');
     return { error };
   }
 
-
   // *********************** PERFIL ****************************
   async getProfile(): Promise<Usuario | null> {
-    try {
-      const { data: { user }, error: authError } = await this.supabase.auth.getUser();
-      if (authError || !user) {
-        throw authError || new Error('Usuario no autenticado');
-      }
-
-      const { data, error } = await this.supabase
-        .from('usuarios')
-        .select('*')
-        .eq('id', user.id)
-        .single();
-
-      this.handleError(error, 'obtener perfil');
-      return data;
-    } catch (error) {
-      console.error('Error al obtener el perfil:', error);
-      return null;
-    }
+    return this.getUser(); 
   }
 
   async updateProfile(profile: Partial<Usuario>): Promise<void> {
-    try {
-      const { data: { user }, error: authError } = await this.supabase.auth.getUser();
-      if (authError || !user) {
-        console.error('Error al obtener el usuario autenticado:', authError?.message);
-        throw authError || new Error('Usuario no autenticado');
-      }
-
-      const { error } = await this.supabase
-        .from('usuarios')
-        .update({
-          nombre: profile.nombre,
-          descripcion: profile.descripcion,
-          photoURL: profile.photoURL,
-        })
-        .eq('id', user.id);
-
-      this.handleError(error, 'actualizar perfil');
-    } catch (error) {
-      console.error('Error al actualizar el perfil:', error);
-      throw error;
+    const user = await this.getUser();
+    if (!user) {
+      throw new Error('Usuario no autenticado');
     }
+
+    const { error } = await this.supabase
+      .from('usuarios')
+      .update(profile)
+      .eq('id', user.id);
+    this.handleError(error, 'actualizar perfil');
   }
 
   // *********************** AMIGOS ****************************
@@ -247,5 +213,46 @@ export class SupabaseService {
       .eq('usuario_id', usuario_id);
     this.handleError(error, 'obtener items del usuario');
     return data ?? [];
+  }
+
+  // *********************** FAVORITOS ****************************
+  async getFavoritos(userId: string): Promise<any[]> {
+    const { data, error } = await this.supabase
+      .from('favoritos')
+      .select('*')
+      .eq('user_id', userId)
+      .order('created_at', { ascending: false });
+    this.handleError(error, 'obtener favoritos');
+    return data ?? [];
+  }
+
+  async addFavoritos(favorito: any): Promise<void> {
+    const { error } = await this.supabase
+      .from('favoritos')
+      .insert([favorito]);
+    this.handleError(error, 'agregar favorito');
+  }
+
+  // *********************** SESIONES ****************************
+  async restoreSession(): Promise<void> {
+    const { data, error } = await this.supabase.auth.getSession();
+    if (error || !data.session) {
+      throw new Error('No hay sesión activa');
+    }
+    console.log('Sesión restaurada:', data.session);
+  }
+
+  async getUser(): Promise<Usuario | null> {
+    const { data: sessionData, error: sessionError } = await this.supabase.auth.getSession();
+    await this.handleSessionError(sessionError);
+    if (!sessionData?.session) return null;
+
+    const { user } = sessionData.session;
+    return this.getUserDataById(user.id); 
+  }
+
+  async handleExpiredSession(): Promise<void> {
+    await this.supabase.auth.signOut();
+    console.warn('La sesión ha caducado. Redirigiendo al inicio de sesión.');
   }
 }

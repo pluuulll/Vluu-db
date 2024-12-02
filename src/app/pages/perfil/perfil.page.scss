@@ -1,57 +1,169 @@
+/* Contenedor principal */
 .profile-content {
-    --background: var(--ion-color-light);
-  
-    .profile-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 16px;
-  
-      .profile-picture {
-        position: relative;
-        width: 120px;
-        height: 120px;
-        border-radius: 50%;
-        overflow: hidden;
-        margin-bottom: 16px;
-        border: 2px solid var(--ion-color-primary);
-        background-color: var(--ion-color-light);
-  
-        .profile-img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-        }
-  
-        .edit-overlay {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background: rgba(0, 0, 0, 0.4);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          opacity: 0;
-          transition: opacity 0.3s ease-in-out;
-          color: white;
-  
-          ion-icon {
-            font-size: 24px;
-          }
-        }
-  
-        &:hover .edit-overlay {
-          opacity: 1;
-        }
-      }
-  
-      ion-list {
-        width: 100%;
-        max-width: 400px;
-        margin-bottom: 16px;
-      }
-    }
-  }
-  
+  --background: #000000;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  min-height: 100vh;
+  background-color: #ffffff;
+}
+
+/* Encabezado */
+ion-header {
+  --background: #000000;
+  --color: #333;
+}
+
+ion-toolbar {
+  --background: #ffffff;
+}
+
+ion-title {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Contenedor de la foto de perfil */
+.profile-picture-container {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin: 20px auto;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+}
+
+.profile-picture-container:hover {
+  transform: scale(1.05);
+}
+
+.profile-picture {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.edit-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  padding: 10px;
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-picture-container:hover .edit-overlay {
+  display: flex;
+}
+
+ion-icon[name='camera-outline'] {
+  color: #ffffff;
+  font-size: 1.5rem;
+}
+
+/* Formulario de información básica */
+.profile-form {
+  margin-top: 20px;
+}
+
+ion-item {
+  margin-bottom: 10px;
+}
+
+ion-label {
+  color: #333;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+ion-input, ion-textarea {
+  --padding-start: 10px;
+  --padding-end: 10px;
+  --background: #000000;
+  --border-radius: 10px;
+  --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Botón de guardar cambios */
+.save-button {
+  margin-top: 30px;
+  --background: #007bff;
+  --border-radius: 50px;
+  --color: white;
+  font-weight: bold;
+  padding: 10px 20px;
+  font-size: 1rem;
+}
+
+.save-button:hover {
+  --background: #0056b3;
+}
+
+/* Contenedor de favoritos */
+.profile-container {
+  margin-top: 40px;
+}
+
+ion-list {
+  margin-top: 20px;
+}
+
+ion-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background: #000000;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+ion-thumbnail img {
+  border-radius: 5px;
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  margin-right: 15px;
+}
+
+ion-label h2 {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin: 0;
+  color: #333;
+}
+
+ion-label p {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+ion-button {
+  margin-left: auto;
+}
+
+ion-button[color='primary'] {
+  font-weight: bold;
+  border-radius: 20px;
+}
+
+ng-template p {
+  text-align: center;
+  color: #999;
+  font-size: 1rem;
+}
+
+/* Fondo para la página completa */
+.profile-content {
+  background-color: #000000; /* Fondo claro en toda la página */
+  color: #333;
+}
+
