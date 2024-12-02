@@ -1,48 +1,46 @@
 <ion-header>
-    <ion-toolbar class="color-principal">
-      <ion-title id="tPrincipal">Vluu</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  
-  <ion-content class="ion-padding">
-  
-    <ion-item class="ion-margin-top">
-      <ion-icon name="person-circle-outline" slot="start"></ion-icon>
-      <ion-input 
-        label="Usuario" 
-        label-placement="floating" 
-        fill="solid" 
-        [(ngModel)]="loginUsuario" 
-        class="ion-margin-start">
-      </ion-input>
-    </ion-item>
-  
-    <ion-item class="ion-margin-top">
-      <ion-icon name="keypad-outline" slot="start"></ion-icon>
-      <ion-input 
-        label="Contraseña" 
-        label-placement="floating" 
-        fill="solid" 
-        [(ngModel)]="loginContrasena" 
-        type="password" 
-        class="ion-margin-start">
-      </ion-input>
-    </ion-item>
-  
-    <ion-button expand="full" class="boton-estilo ion-margin-top" (click)="validarCredenciales()">
-      Ingresar
-    </ion-button>
-  
-    <ion-text class="ion-margin-top">
-      <p class="ion-text-center enlace-estilo" [routerLink]="['/recuperar']">
-        Recuperar contraseña
-      </p>
-    </ion-text>
-  
-    <ion-text class="ion-margin-top">
-      <p class="ion-text-center enlace-estilo" [routerLink]="['/registro']">
-        Registrate
-      </p>
-    </ion-text>
-  </ion-content>
-  
+  <ion-toolbar class="color-principal">
+    <ion-title id="tPrincipal">Vluu</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-item class="ion-margin-top">
+    <ion-icon name="person-circle-outline" slot="start"></ion-icon>
+    <ion-input 
+      label="Usuario" 
+      label-placement="floating" 
+      fill="solid" 
+      [(ngModel)]="loginUsuario" 
+      class="ion-margin-start">
+    </ion-input>
+  </ion-item>
+
+  <ion-item class="ion-margin-top">
+    <ion-icon name="keypad-outline" slot="start"></ion-icon>
+    <ion-input 
+      label="Contraseña" 
+      label-placement="floating" 
+      fill="solid" 
+      [(ngModel)]="loginContrasena" 
+      type="password" 
+      class="ion-margin-start">
+    </ion-input>
+  </ion-item>
+
+  <ion-button expand="full" class="boton-estilo ion-margin-top" (click)="validarCredenciales()">
+    Ingresar
+  </ion-button>
+
+  <ion-text class="ion-margin-top">
+    <p class="ion-text-center enlace-estilo" [routerLink]="['/recuperar']">
+      Recuperar contraseña
+    </p>
+  </ion-text>
+
+  <ion-text class="ion-margin-top">
+    <p class="ion-text-center enlace-estilo" [routerLink]="['/registro']">
+      Registrate
+    </p>
+  </ion-text>
+</ion-content>

@@ -15,9 +15,8 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-    <!-- Mostrar el nombre de usuario que ingresó -->
     <ion-text>
-        <h2 class="ion-text-center">Bienvenido, {{ username }}!</h2>
+        <h2 class="ion-text-center">Bienvenido {{ user?.nombre || '' }}</h2>
     </ion-text>
 
     <!-- Formulario de Registro -->
