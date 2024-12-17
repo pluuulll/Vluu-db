@@ -8,12 +8,14 @@ import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
   styleUrls: ['./escanear.page.scss'],
 })
 export class EscanearPage {
+  scannedText: string | undefined;
+
   constructor(private qrScanner: QRScanner, private platform: Platform) {}
 
   startScanning() {
     if (!this.platform.is('cordova') && !this.platform.is('capacitor')) {
-      console.error('El escáner QR solo está disponible en dispositivos reales.');
-      alert('El escáner QR solo está disponible en dispositivos reales.');
+      console.error('El escáner QR solo funciona en dispositivos reales.');
+      alert('El escáner QR solo funciona en dispositivos reales.');
       return;
     }
 
@@ -21,38 +23,39 @@ export class EscanearPage {
       .prepare()
       .then((status: QRScannerStatus) => {
         if (status.authorized) {
-          // La cámara está autorizada y lista para usar
-          this.qrScanner.show(); // Muestra la cámara
+          // Habilitar el escáner
+          this.qrScanner.show();
+          document.body.style.opacity = '0'; // Hace que la app sea transparente para ver la cámara
+
           const scanSub = this.qrScanner.scan().subscribe(
             (text: string) => {
               console.log('Código QR escaneado:', text);
               alert('Código QR escaneado: ' + text);
-              this.qrScanner.hide(); // Oculta la cámara después de escanear
-              scanSub.unsubscribe(); // Detén la suscripción para evitar llamadas múltiples
+              this.scannedText = text;
+
+              this.qrScanner.hide(); // Ocultar la cámara
+              document.body.style.opacity = '1'; // Restaurar la visibilidad de la app
+              scanSub.unsubscribe(); // Detener la suscripción
             },
-            (error) => {
-              console.error('Error al escanear el QR:', error);
-              alert('Error al escanear el QR. Por favor, intenta de nuevo.');
+            (err) => {
+              console.error('Error al escanear el código QR:', err);
+              alert('No se pudo escanear el QR. Intenta nuevamente.');
             }
           );
         } else if (status.denied) {
-          console.error('Permiso para usar la cámara denegado.');
           alert(
-            'Permiso denegado. Por favor, activa los permisos para usar la cámara desde la configuración.'
+            'Permiso denegado. Habilita el acceso a la cámara en la configuración.'
           );
-          this.qrScanner.openSettings(); // Abre configuración si es necesario
+          this.qrScanner.openSettings();
         } else {
-          console.warn('Permiso para usar la cámara no está disponible.');
           alert(
-            'No se puede acceder a la cámara. Verifica los permisos o el hardware.'
+            'Permiso para usar la cámara no está disponible. Intenta nuevamente.'
           );
         }
       })
       .catch((e) => {
         console.error('Error al preparar el escáner:', e);
-        alert(
-          'Ocurrió un error al iniciar el escáner. Verifica tu dispositivo o permisos.'
-        );
+        alert('Hubo un problema al iniciar el escáner.');
       });
   }
 }
