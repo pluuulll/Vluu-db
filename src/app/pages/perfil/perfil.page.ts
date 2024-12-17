@@ -24,7 +24,7 @@ export class PerfilPage implements OnInit {
 
   async ngOnInit() {
     await this.loadUserProfile();
-    await this.loadFavoritos(); // Cargar los favoritos después de cargar el perfil
+    await this.loadFavoritosDesdeLocalStorage(); // Cargar favoritos desde localStorage
   }
 
   private async loadUserProfile() {
@@ -47,34 +47,22 @@ export class PerfilPage implements OnInit {
     }
   }
 
-  // Método para cargar los favoritos del usuario
-  private async loadFavoritos() {
-    const loading = await this.presentLoading('Cargando favoritos...');
+  // Método para cargar favoritos desde localStorage
+  private async loadFavoritosDesdeLocalStorage() {
     try {
-      // Obtén el user ID de la autenticación de Supabase
-      const user = await this.supabaseService.getUser(); // Método para obtener el usuario autenticado
-      const userId = user?.id; // Asegúrate de obtener el ID del usuario autenticado
-
-      if (userId) {
-        // Si el ID del usuario está disponible, procede a obtener los favoritos
-        const favoritos = await this.supabaseService.getFavoritos(userId);
-        this.favoritos = favoritos || []; // Asignamos los favoritos a la variable
-      } else {
-        console.error('No se ha encontrado el ID del usuario.');
-        await this.presentAlert('Error', 'No se pudo obtener el ID del usuario.');
-      }
+      const favoritos = JSON.parse(localStorage.getItem('favoritos') || '[]');
+      this.favoritos = favoritos || [];
+      console.log('Favoritos cargados desde localStorage:', this.favoritos);
     } catch (error) {
-      console.error('Error al cargar los favoritos:', error);
+      console.error('Error al cargar los favoritos desde localStorage:', error);
       await this.presentAlert('Error', 'No se pudieron cargar los favoritos.');
-    } finally {
-      await loading.dismiss();
     }
   }
 
   // Método para reproducir la vista previa de la canción
   playPreview(previewUrl: string) {
-    const audio = new Audio(previewUrl);  // Crea un objeto Audio con la URL de la vista previa
-    audio.play();  // Reproduce la canción
+    const audio = new Audio(previewUrl); // Crea un objeto Audio con la URL de la vista previa
+    audio.play(); // Reproduce la canción
   }
 
   async changeProfilePicture() {
@@ -134,4 +122,6 @@ export class PerfilPage implements OnInit {
   private isUserProfileValid(user: Usuario): boolean {
     return user.usuario.trim() !== '' && user.contrasena.trim() !== '';
   }
+
+  
 }

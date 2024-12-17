@@ -39,24 +39,20 @@
 
   <div class="profile-container">
     <!-- Mostrar favoritos -->
-    <ion-list *ngIf="favoritos.length > 0; else noFavorites">
-      <ion-item *ngFor="let favorito of favoritos">
-        <ion-thumbnail slot="start">
-          <img [src]="favorito.artwork_url || 'assets/default-cover.jpg'" alt="Portada" />
-        </ion-thumbnail>
+    <ion-list *ngIf="favoritos?.length; else noFavoritos">
+      <ion-item *ngFor="let fav of favoritos">
         <ion-label>
-          <h2>{{ favorito.track_name }}</h2>
-          <p>{{ favorito.artist_name }}</p>
-          <small>{{ favorito.collection_name }}</small>
+          <h2>{{ fav.trackName }}</h2>
+          <p>{{ fav.artistName }}</p>
         </ion-label>
-        <ion-button slot="end" fill="outline" color="primary" (click)="playPreview(favorito.preview_url)">
-          Vista Previa
-        </ion-button>
       </ion-item>
     </ion-list>
-
-    <ng-template #noFavorites>
-      <p>No tienes favoritos aún.</p>
+    
+    <ng-template #noFavoritos>
+      <ion-item>
+        <ion-label>No hay favoritos guardados.</ion-label>
+      </ion-item>
     </ng-template>
+
   </div>
 </ion-content>

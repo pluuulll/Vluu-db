@@ -237,7 +237,6 @@ export class SupabaseService {
   async restoreSession(): Promise<void> {
     const { data, error } = await this.supabase.auth.getSession();
     if (error || !data.session) {
-      throw new Error('No hay sesión activa');
     }
     console.log('Sesión restaurada:', data.session);
   }

@@ -19,7 +19,7 @@ export class RecomendacionesPage implements OnInit {
     private toastController: ToastController,
     private itunesService: ItunesService, // Inyectamos el servicio de iTunes
     private supabaseService: SupabaseService // Inyectamos el servicio de Supabase
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.cargarRecomendaciones();
@@ -52,46 +52,6 @@ export class RecomendacionesPage implements OnInit {
         }).catch((error) => {
           console.error('Error al cargar favoritos:', error);
         });
-      } else {
-        console.error('No hay usuario autenticado o userId es undefined');
-      }
-    }).catch((error) => {
-      console.error('Error al obtener el usuario autenticado:', error);
-    });
-  }
-
-  // Método para agregar una canción a favoritos
-  agregarAFavoritos(track: any) {
-    this.supabaseService.getUser().then((user) => {
-      if (user && user.id) {
-        const esFavorito = this.favoritos.some((f) => f.track_name === track.trackName); // Comprobamos si la canción ya está en favoritos
-
-        if (!esFavorito) {
-          // Agregar a la lista local de favoritos
-          this.favoritos.push(track);
-          this.mostrarToast(`${track.trackName} añadido a favoritos`);
-
-          // Llamar al servicio de Supabase para agregar el favorito a la base de datos
-          const userId = user.id; // Obtén el ID del usuario autenticado
-          const favorito = {
-            user_id: userId, // Usamos el user_id correcto aquí
-            track_name: track.trackName,
-            artist_name: track.artistName,
-            collection_name: track.collectionName,
-            artwork_url: track.artworkUrl,
-            preview_url: track.previewUrl,
-            created_at: new Date().toISOString(),
-          };
-
-          this.supabaseService.addFavoritos(favorito).then(() => {
-            console.log('Favorito agregado correctamente');
-          }).catch((error) => {
-            console.error('Error al agregar favorito a la base de datos:', error);
-            this.mostrarToast('Error al guardar en la base de datos');
-          });
-        } else {
-          this.mostrarToast(`${track.trackName} ya está en favoritos`);
-        }
       } else {
         console.error('No hay usuario autenticado o userId es undefined');
       }
@@ -153,4 +113,54 @@ export class RecomendacionesPage implements OnInit {
     });
     toast.present();
   }
+  agregarAFavoritos(track: any) {
+    this.supabaseService.getUser().then((user) => {
+      if (user && user.id) {
+        const userId = user.id;
+  
+        // Verificar si el track ya está en favoritos
+        const esFavorito = this.favoritos.some((f) => f.track_name === track.trackName);
+  
+        if (!esFavorito) {
+          // Crear objeto favorito
+          const favorito = {
+            user_id: userId,
+            track_name: track.trackName,
+            artist_name: track.artistName,
+            collection_name: track.collectionName,
+            artwork_url: track.artworkUrl100 || 'assets/default-album.jpg',
+            preview_url: track.previewUrl,
+            created_at: new Date().toISOString(),
+          };
+  
+          // Añadir localmente
+          this.favoritos.push(favorito);
+          this.mostrarToast(`${track.trackName} añadido a favoritos`);
+  
+          // Guardar en Supabase
+          this.supabaseService.addFavoritos(favorito)
+            .then(() => console.log('Favorito agregado correctamente en la base de datos'))
+            .catch((error) => {
+              console.error('Error al guardar en la base de datos:', error);
+              this.mostrarToast('Error al guardar en la base de datos');
+            });
+  
+          // Actualizar localStorage
+          const favoritosLocal = JSON.parse(localStorage.getItem('favoritos') || '[]');
+          favoritosLocal.push(favorito);
+          localStorage.setItem('favoritos', JSON.stringify(favoritosLocal));
+        } else {
+          this.mostrarToast(`${track.trackName} ya está en favoritos`);
+        }
+      } else {
+        console.error('No hay usuario autenticado o userId es undefined');
+      }
+    }).catch((error) => {
+      console.error('Error al obtener el usuario autenticado:', error);
+      this.mostrarToast('Error al autenticar al usuario');
+    });
+  }
+  
+  
+
 }
