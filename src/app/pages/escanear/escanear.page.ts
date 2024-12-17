@@ -30,8 +30,9 @@ export class EscanearPage {
           const scanSub = this.qrScanner.scan().subscribe(
             (text: string) => {
               console.log('Código QR escaneado:', text);
-              alert('Código QR escaneado: ' + text);
               this.scannedText = text;
+
+              alert('Código QR escaneado: ' + text);
 
               this.qrScanner.hide(); // Ocultar la cámara
               document.body.style.opacity = '1'; // Restaurar la visibilidad de la app
@@ -40,6 +41,9 @@ export class EscanearPage {
             (err) => {
               console.error('Error al escanear el código QR:', err);
               alert('No se pudo escanear el QR. Intenta nuevamente.');
+
+              this.qrScanner.hide(); // Asegurarse de ocultar la cámara incluso si hay un error
+              document.body.style.opacity = '1'; // Restaurar la visibilidad de la app
             }
           );
         } else if (status.denied) {
