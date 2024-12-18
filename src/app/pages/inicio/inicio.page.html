@@ -24,7 +24,8 @@
         <h1 class="form-title">Registro de Canción</h1>
         <ion-item>
             <ion-label position="floating">Nombre de la Canción</ion-label>
-            <ion-input type="text" [(ngModel)]="song.nombre" name="nombre" placeholder="Nombre de la canción" required></ion-input>
+            <ion-input type="text" [(ngModel)]="song.nombre" name="nombre" placeholder="Nombre de la canción"
+                required></ion-input>
         </ion-item>
         <ion-item>
             <ion-label position="floating">Artista</ion-label>
@@ -40,9 +41,11 @@
         </ion-item>
         <ion-item>
             <ion-label position="floating">Año de Salida</ion-label>
-            <ion-input type="number" [(ngModel)]="song.ano" name="ano" min="1900" max="2100" placeholder="Año"></ion-input>
+            <ion-input type="number" [(ngModel)]="song.ano" name="ano" min="1900" max="2100"
+                placeholder="Año"></ion-input>
         </ion-item>
-        <ion-button expand="block" type="submit" [disabled]="songForm.invalid" class="submit-button">Agregar Canción</ion-button>
+        <ion-button expand="block" type="submit" [disabled]="songForm.invalid" class="submit-button">Agregar
+            Canción</ion-button>
     </form>
 
     <!-- Botones de navegación -->
@@ -68,6 +71,9 @@
         </ion-button>
         <ion-button class="custom-button" [routerLink]="['/chat']" expand="block">
             <ion-icon name="chatbubble-outline"></ion-icon> Ir al Chat
+        </ion-button>
+        <ion-button class="custom-button" [routerLink]="['/camara']" expand="block">
+            <ion-icon name="chatbubble-outline"></ion-icon> Camara
         </ion-button>
     </div>
 </ion-content>

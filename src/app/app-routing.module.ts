@@ -26,6 +26,10 @@ const routes: Routes = [
 
   // Redirección genérica para rutas no encontradas
   { path: '**', redirectTo: 'e404', pathMatch: 'full' },
+  {
+    path: 'camara',
+    loadChildren: () => import('./pages/camara/camara.module').then(m => m.CamaraPageModule)
+  },
 ];
 
 @NgModule({
