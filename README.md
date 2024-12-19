@@ -3,3 +3,11 @@
 ______________________________________________________________________________________________
 
 Aqui esta el codigo qr para poder acceder a una demo de mi proyecto en forma movil (android)
+
+______________________________________________________________________________________________
+
+Dependencias que utiliza el proyecto
+
+npm list rxjs
+npm install rxjs@^7.5.0 --save
+npm install --legacy-peer-deps
